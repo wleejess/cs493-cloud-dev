@@ -1,16 +1,19 @@
-<!doctype html>
-<html>
-<head>
-  <title>Jessica Lee - Assignment 1</title>
-  <script src="{{ url_for('static', filename='script.js') }}"></script>
-  <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
+<!-- Simple index page with form to get user's name as an input 
+     Based on "Building a Python 3 App on App Engine" tutorial by Google
+     Date Accessed: 4/3/2024 -->
 
-  <h1>Datastore and Firebase Auth Example</h1>
-
-  <h2>Hi {{name}}! Thanks for checking out this website.</h2>
-
-
-</body>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>JL-A1 Index</title>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+    <h2>Jessica Lee - Assignment 1</h2>
+    <form action="/" method="post">
+        <label for="name">Enter Name:</label>
+        <input type="text" id="name" name="name" required>
+        <button type="submit">Submit</button>
+    </form>
+  </body>
 </html>

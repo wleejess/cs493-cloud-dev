@@ -1,3 +1,7 @@
+""" 
+Main Python file to render web pages using flask
+""" 
+
 import datetime
 
 from flask import Flask, render_template, request
@@ -11,11 +15,11 @@ def root():
     if request.method == "POST":
         name = request.form.get("name")
         if name:
-            return render_template("index.html", name=name)
+            return render_template("result.html", name=name)
         else:
             return "Name not provided."
 
-    return render_template("form.html")
+    return render_template("index.html")
 
 if __name__ == "__main__":
     # This is used when running locally only. When deploying to Google App
