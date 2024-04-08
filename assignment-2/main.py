@@ -1,6 +1,6 @@
 import datetime
 
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request, url_for, redirect
 from google.cloud import datastore
 
 app = Flask(__name__)
@@ -10,6 +10,10 @@ datastore_client = datastore.Client()
 def index():
     return render_template("index.html")
 
+@app.route('/index.html')
+def home():
+    return render_template("/index.html")
+
 @app.route('/business.html', methods=['POST', 'GET'])
 def business():
     if request.method == 'POST':
@@ -17,7 +21,7 @@ def business():
         if request.form.get("addBusiness"):
             # do something to add the business
             pass
-        return redirect("/business.html")
+        return render_template("/business.html")
     
     if request.method == 'GET':        
         # access datastore to get all businesses
@@ -26,7 +30,7 @@ def business():
 @app.route('/business/delete/<int:id>')
 def delete_business(id):
     # datastore to delete a business
-    return redirect("/business.html")
+    return render_template("/business.html")
 
 @app.route('/business/edit/<int:id>', methods=['POST', 'GET'])
 def edit_business(id):
@@ -39,7 +43,7 @@ def edit_business(id):
         if request.form.get("updateBusiness"):
             # retrieve user form input
             pass
-        return redirect("/business.html")
+        return render_template("/business.html")
 
 @app.route('/reviews.html', methods=['POST', 'GET'])
 def reviews():
@@ -48,7 +52,7 @@ def reviews():
         if request.form.get("addBusiness"):
             # do something to add the reviews
             pass
-        return redirect("/reviews.html")
+        return render_template("/reviews.html")
     
     if request.method == 'GET':        
         # access datastore to get all reviews
