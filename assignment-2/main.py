@@ -8,9 +8,6 @@ client = datastore.Client()
 
 BUSINESSES = 'businesses'
 REVIEWS = 'reviews'
-ERROR_400 = 'The request body is missing at least one of the required attributes'
-ERROR_404 = 'No business with this business_id exists'
-ERROR_409 = 'You have already submitted a review for this business. You can update your previous review, or delete it and submit a new review'
 
 @app.route('/')
 def index():
@@ -80,7 +77,7 @@ def put_business(id):
     business_key = client.key(BUSINESSES, id)
     business = client.get(key=business_key)
     if business is None:
-        return {"Error": "No business with this business_id exists"}, 404
+        return {'Error': 'No business with this business_id exists'}, 404
     else:
         if check_attributes(content):
             business.update({
@@ -114,7 +111,7 @@ def get_owner_business(owner_id):
 
     if('owner_id' in query_params):
         owner_id = query_params['owner_id']
-        query.add_filter('owner_id', '=', int(owner_id))
+        query.add_filter('owner_id', '==', int(owner_id))
     results = list(query.fetch())
     for r in results:
         r['id'] = r.key.id
@@ -126,6 +123,21 @@ def reviews():
         content = request.get_json()
 
         if check_params(content):
+            user_id = content.get('user_id')
+            business_id = content.get('business_id')
+
+            business_key = client.key(BUSINESSES, business_id)
+            business = client.get(key=business_key)
+            if business is None:
+                return {"Error": "No business with this business_id exists"}, 404
+
+            existing_review_query = client.query(kind=REVIEWS)
+            existing_review_query.add_filter('user_id', '=', user_id)
+            existing_review_query.add_filter('business_id', '=', business_id)
+            existing_reviews = list(existing_review_query.fetch())
+            if existing_reviews:
+                return {"Error": "You have already submitted a review for this business. You can update your previous review, or delete it and submit a new review"}, 409
+
             new_key = client.key(REVIEWS)
             new_review = client.entity(key=new_key)
 
@@ -173,20 +185,52 @@ def get_review(id):
 def put_review(id):
     content = request.get_json()
     review_key = client.key(REVIEWS, id)
-    review = client.get(key=review)
+    review = client.get(key=review_key)
     if review is None:
-        return {"Error": "No business with this business_id exists"}, 404
+        return {"Error": "No review with this review_id exists"}, 404
     else:
-        review.update({
-                'user_id': content['user_id'],
-                'business_id': content['business_id'],
-                'stars': content['stars'],
-                'review_text': content['review_text'],
-            })
-        client.put(review)
-        review['id'] = review.key.id
-        return review
+        if ('stars' in content) and ('review_text' in content):
+            review.update({
+                    'stars': content['stars'],
+                    'review_text': content['review_text'],
+                })
+            client.put(review)
+            review['id'] = review.key.id
+            return review
+        elif ('stars' in content):
+            review.update({
+                    'stars': content['stars'],
+                })
+            client.put(review)
+            review['id'] = review.key.id
+            return review
+        else:
+            return {"Error": "The request body is missing at least one of the required attributes"}, 400
+
   
+@app.route('/reviews/<int:id>', methods=['DELETE'])
+def delete_review(id):
+    review_key = client.key(REVIEWS, id)
+    review = client.get(key=review_key)
+    if review is None:
+        return {"Error": "No review with this review_id exists"}, 404
+    else:
+        client.delete(review_key)
+        return ('', 204)
+
+@app.route('/users/<user_id>/reviews', methods=['GET'])
+def get_user_reviews(user_id):
+    query = client.query(kind=REVIEWS)
+    query_params = request.args
+
+    if('user_id' in query_params):
+        user_id = query_params['user_id']
+        query.add_filter('user_id', '=', int(id))
+    results = list(query.fetch())
+    for r in results:
+        r['id'] = r.key.id
+    return results
+
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8080, debug=True)
 
