@@ -1,0 +1,1051 @@
+newman
+
+assignment2
+
+❏ Businesses CRUD (30 points)
+↳ 1. add business 201 (2 points)
+  POST https://a2-jessicalee.wl.r.appspot.com/businesses  
+  201 Created ★ 118ms time ★ 457B↑ 399B↓ size ★ 9↑ 6↓ headers ★ 0 cookies
+  ┌ ↑ raw ★ 151B
+  │ {
+  │   "owner_id": 6789,
+  │   "name": "Mandola's",
+  │   "street_address": "4900 N Lamar Blvd",
+  │   "city": "Austin",
+  │   "state": "TX",
+  │   "zip_code": 78751
+  │ }
+  └ 
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 142B
+  │ {"city":"Austin","id":5069189920325632,"name":"Mandola
+  │ 's","owner_id":6789,"state":"TX","street_address":"490
+  │ 0 N Lamar Blvd","zip_code":78751}
+  └
+  prepare   wait   dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  11ms      6ms    1ms          18ms            23ms            61ms             6ms        442µs     129ms 
+
+  ✓  201 status code
+  ✓  content is valid
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Businesses Test 1 points = 2'
+  │ '******* Businesses CRUD current points = 2'
+  └
+
+↳ 2. add business with missing attributes 400 (2 points)
+  POST https://a2-jessicalee.wl.r.appspot.com/businesses  
+  400 Bad Request ★ 30ms time ★ 442B↑ 336B↓ size ★ 9↑ 6↓ headers ★ 0 cookies
+  ┌ ↑ raw ★ 136B
+  │ {
+  │   "owner_id": 6789,
+  │   "name": "Torchy Tacos",
+  │   "street_address": "4900 N Lamar Blvd",
+  │   "city": "Austin",
+  │   "zip_code": 78751
+  │ }
+  └ 
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 80B
+  │ {"Error":"The request body is missing at least one of 
+  │ the required attributes"}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  885µs     392µs   (cache)      (cache)         (cache)         27ms             1ms        43µs      30ms  
+
+  ✓  400 status code
+  ✓  400 error message
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Businesses Test 2 points = 2'
+  │ '******* Businesses CRUD current points = 4'
+  └
+
+↳ 3. add second business 201 (2 points)
+  POST https://a2-jessicalee.wl.r.appspot.com/businesses  
+  201 Created ★ 61ms time ★ 455B↑ 393B↓ size ★ 9↑ 6↓ headers ★ 0 cookies
+  ┌ ↑ raw ★ 149B
+  │ {
+  │   "owner_id": 6789,
+  │   "name": "Mandola's",
+  │   "street_address": "321 South Mopac",
+  │   "city": "Austin",
+  │   "state": "TX",
+  │   "zip_code": 78751
+  │ }
+  └ 
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 140B
+  │ {"city":"Austin","id":5104575795167232,"name":"Mandola
+  │ 's","owner_id":6789,"state":"TX","street_address":"321
+  │  South Mopac","zip_code":78751}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  869µs     183µs   (cache)      (cache)         (cache)         58ms             1ms        55µs      61ms  
+
+  ✓  201 status code
+  ✓  content is valid
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Businesses Test 3 points = 2'
+  │ '******* Businesses CRUD current points = 6'
+  └
+
+↳ 4. get business 200 (4 points)
+  GET https://a2-jessicalee.wl.r.appspot.com/businesses/5069189920325632  
+  200 OK ★ 41ms time ★ 269B↑ 468B↓ size ★ 7↑ 9↓ headers ★ 0 cookies
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 142B
+  │ {"city":"Austin","id":5069189920325632,"name":"Mandola
+  │ 's","owner_id":6789,"state":"TX","street_address":"490
+  │ 0 N Lamar Blvd","zip_code":78751}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  867µs     268µs   (cache)      (cache)         (cache)         37ms             2ms        941µs     42ms  
+
+  ✓  200 status code
+  ✓  content is valid
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Businesses Test 4 points = 4'
+  │ '******* Businesses CRUD current points = 10'
+  └
+
+↳ 5. get business with invalid id 404 (2 points)
+  GET https://a2-jessicalee.wl.r.appspot.com/businesses/1  
+  404 Not Found ★ 40ms time ★ 254B↑ 386B↓ size ★ 7↑ 9↓ headers ★ 0 cookies
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 53B
+  │ {"Error":"No business with this business_id exists"}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  904µs     277µs   (cache)      (cache)         (cache)         38ms             1ms        725µs     41ms  
+
+  ✓  404 not found
+  ✓  404 error message
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Businesses Test 5 points = 2'
+  │ '******* Businesses CRUD current points = 12'
+  └
+
+↳ 6. get all businesses 200 (6 points)
+  GET https://a2-jessicalee.wl.r.appspot.com/businesses  
+  200 OK ★ 52ms time ★ 252B↑ 1.33kB↓ size ★ 7↑ 9↓ headers ★ 0 cookies
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 1kB
+  │ [{"city":"Austin","id":5069189920325632,"name":"Mandol
+  │ a's","owner_id":6789,"state":"TX","street_address":"49
+  │ 00 N Lamar Blvd","zip_code":78751},{"city":"Austin","i
+  │ d":5104575795167232,"name":"Mandola's","owner_id":6789
+  │ ,"state":"TX","street_address":"321 South Mopac","zip_
+  │ code":78751},{"city":"Austin","id":5112644562321408,"n
+  │ ame":"Mandola's","owner_id":6789,"state":"TX","street_
+  │ address":"321 South Mopac","zip_code":78751},{"city":"
+  │ Austin","id":5143677177430016,"name":"Mandola's","owne
+  │ r_id":6789,"state":"TX","street_address":"4900 N Lamar
+  │  Blvd","zip_code":78751},{"city":"Austin","id":5640825
+  │ 748848640,"name":"Mandola's","owner_id":6789,"state":"
+  │ TX","street_address":"321 South Mopac","zip_code":7875
+  │ 1},{"city":"Austin","id":5710353417633792,"name":"Torc
+  │ hy Tacos","owner_id":6789,"state":"TX","street_address
+  │ ":"5100 Burnet Road","zip_code":78703},{"city":"Austin
+  │ ","id":5750704903815168,"name":"Mandola's Italian","ow
+  │ ner_id":6789,"state":"TX","street_address":"4900 N Lam
+  │ ar Blvd","zip_code":78751}]
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  826µs     183µs   (cache)      (cache)         (cache)         49ms             1ms        1ms       53ms  
+
+  ✓  200 status code
+  ✓  At least two businesses exists
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Businesses Test 6 points = 6'
+  │ '******* Businesses CRUD current points = 18'
+  └
+
+↳ 7. edit business 200 (2 points)
+  PUT https://a2-jessicalee.wl.r.appspot.com/businesses/5069189920325632  
+  200 OK ★ 53ms time ★ 481B↑ 476B↓ size ★ 9↑ 9↓ headers ★ 0 cookies
+  ┌ ↑ raw ★ 159B
+  │ {
+  │   "owner_id": 6789,
+  │   "name": "Mandola's Italian",
+  │   "street_address": "4900 N Lamar Blvd",
+  │   "city": "Austin",
+  │   "state": "TX",
+  │   "zip_code": 78751
+  │ }
+  └ 
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 150B
+  │ {"city":"Austin","id":5069189920325632,"name":"Mandola
+  │ 's Italian","owner_id":6789,"state":"TX","street_addre
+  │ ss":"4900 N Lamar Blvd","zip_code":78751}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  936µs     223µs   (cache)      (cache)         (cache)         50ms             1ms        412µs     53ms  
+
+  ✓  200 status code
+  ✓  content is valid
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Businesses Test 7 points = 2'
+  │ '******* Businesses CRUD current points = 20'
+  └
+
+↳ 8. get business after update 200 (2 points)
+  GET https://a2-jessicalee.wl.r.appspot.com/businesses/5069189920325632  
+  200 OK ★ 46ms time ★ 269B↑ 476B↓ size ★ 7↑ 9↓ headers ★ 0 cookies
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 150B
+  │ {"city":"Austin","id":5069189920325632,"name":"Mandola
+  │ 's Italian","owner_id":6789,"state":"TX","street_addre
+  │ ss":"4900 N Lamar Blvd","zip_code":78751}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  1ms       194µs   (cache)      (cache)         (cache)         44ms             1ms        337µs     47ms  
+
+  ✓  200 status code
+  ✓  content is valid
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Businesses Test 8 points = 2'
+  │ '******* Businesses CRUD current points = 22'
+  └
+
+↳ 9. edit business with missing attributes 400 (1 point)
+  PUT https://a2-jessicalee.wl.r.appspot.com/businesses/5069189920325632  
+  400 Bad Request ★ 41ms time ★ 457B↑ 336B↓ size ★ 9↑ 6↓ headers ★ 0 cookies
+  ┌ ↑ raw ★ 135B
+  │ {
+  │   "owner_id": 123,
+  │   "name": "Torchy Tacos",
+  │   "street_address": "4900 N Lamar Blvd",
+  │   "city": "Austin",
+  │   "zip_code": 78751
+  │ }
+  └ 
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 80B
+  │ {"Error":"The request body is missing at least one of 
+  │ the required attributes"}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  1ms       282µs   (cache)      (cache)         (cache)         38ms             1ms        94µs      41ms  
+
+  ✓  400 status code
+  ✓  400 error message
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Businesses Test 9 points = 1'
+  │ '******* Businesses CRUD current points = 23'
+  └
+
+↳ 10. edit business with invalid id 404 (1 point)
+  PUT https://a2-jessicalee.wl.r.appspot.com/businesses/1  
+  404 Not Found ★ 47ms time ★ 468B↑ 386B↓ size ★ 9↑ 9↓ headers ★ 0 cookies
+  ┌ ↑ raw ★ 161B
+  │ {
+  │   "owner_id": 6789,
+  │   "name": "Mandola's Italian",
+  │   "street_address": "4900 N Lamar Blvd",
+  │   "city": "Austin",
+  │   "state": "TX",
+  │   "zip_code": 78751
+  │ }
+  └ 
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 53B
+  │ {"Error":"No business with this business_id exists"}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  737µs     288µs   (cache)      (cache)         (cache)         44ms             1ms        347µs     47ms  
+
+  ✓  404 not found
+  ✓  404 error message
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Businesses Test 10 points = 1'
+  │ '******* Businesses CRUD current points = 24'
+  └
+
+↳ 11. delete business 204 (2 points)
+  DELETE https://a2-jessicalee.wl.r.appspot.com/businesses/5069189920325632  
+  204 No Content ★ 88ms time ★ 272B↑ 262B↓ size ★ 7↑ 6↓ headers ★ 0 cookies
+  ↓ text/html ★ text ★ html ★ utf8
+
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  924µs     172µs   (cache)      (cache)         (cache)         86ms             850µs      23µs      88ms  
+
+  ✓  204 no content
+  ┌
+  │ '******* Businesses Test 11 points = 2'
+  │ '******* Businesses CRUD current points = 26'
+  └
+
+↳ 12. delete business just deleted 404 (2 points)
+  DELETE https://a2-jessicalee.wl.r.appspot.com/businesses/5069189920325632  
+  404 Not Found ★ 35ms time ★ 272B↑ 386B↓ size ★ 7↑ 9↓ headers ★ 0 cookies
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 53B
+  │ {"Error":"No business with this business_id exists"}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  772µs     245µs   (cache)      (cache)         (cache)         33ms             851µs      273µs     35ms  
+
+  ✓  404 not found
+  ✓  404 error message
+  ┌
+  │ '******* Businesses Test 12 points = 2'
+  │ '******* Businesses CRUD current points = 28'
+  └
+
+↳ 13. delete second business 204 (2 points)
+  DELETE https://a2-jessicalee.wl.r.appspot.com/businesses/5104575795167232  
+  204 No Content ★ 66ms time ★ 272B↑ 262B↓ size ★ 7↑ 6↓ headers ★ 0 cookies
+  ↓ text/html ★ text ★ html ★ utf8
+
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  843µs     390µs   (cache)      (cache)         (cache)         63ms             1ms        32µs      65ms  
+
+  ✓  204 no content
+  ┌
+  │ '******* Businesses Test 13 points = 2'
+  │ '******* Businesses CRUD total points = 30'
+  └
+
+❏ List businesses for owner (6 points)
+↳ 1. add business for owner 1 201 (0 points)
+  POST https://a2-jessicalee.wl.r.appspot.com/businesses  
+  201 Created ★ 43ms time ★ 457B↑ 395B↓ size ★ 9↑ 6↓ headers ★ 0 cookies
+  ┌ ↑ raw ★ 151B
+  │ {
+  │   "owner_id": 6789,
+  │   "name": "Mandola's",
+  │   "street_address": "4900 N Lamar Blvd",
+  │   "city": "Austin",
+  │   "state": "TX",
+  │   "zip_code": 78751
+  │ }
+  └ 
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 142B
+  │ {"city":"Austin","id":6243479118151680,"name":"Mandola
+  │ 's","owner_id":6789,"state":"TX","street_address":"490
+  │ 0 N Lamar Blvd","zip_code":78751}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  969µs     411µs   (cache)      (cache)         (cache)         40ms             1ms        45µs      43ms  
+
+  ✓  201 status code
+  ✓  content is valid
+  ✓  The response content type is application.json
+
+↳ 2. add 2nd business for owner 1 201 (0 points)
+  POST https://a2-jessicalee.wl.r.appspot.com/businesses  
+  201 Created ★ 73ms time ★ 455B↑ 393B↓ size ★ 9↑ 6↓ headers ★ 0 cookies
+  ┌ ↑ raw ★ 149B
+  │ {
+  │   "owner_id": 6789,
+  │   "name": "Mandola's",
+  │   "street_address": "321 South Mopac",
+  │   "city": "Austin",
+  │   "state": "TX",
+  │   "zip_code": 78751
+  │ }
+  └ 
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 140B
+  │ {"city":"Austin","id":5700228501995520,"name":"Mandola
+  │ 's","owner_id":6789,"state":"TX","street_address":"321
+  │  South Mopac","zip_code":78751}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  936µs     223µs   (cache)      (cache)         (cache)         71ms             1ms        35µs      73ms  
+
+  ✓  201 status code
+  ✓  content is valid
+  ✓  The response content type is application.json
+
+↳ 3. add business for owner 2 (0 points)
+  POST https://a2-jessicalee.wl.r.appspot.com/businesses  
+  201 Created ★ 79ms time ★ 455B↑ 393B↓ size ★ 9↑ 6↓ headers ★ 0 cookies
+  ┌ ↑ raw ★ 149B
+  │ {
+  │   "owner_id": 7890,
+  │   "name": "Mandola's",
+  │   "street_address": "321 South Mopac",
+  │   "city": "Austin",
+  │   "state": "TX",
+  │   "zip_code": 78751
+  │ }
+  └ 
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 140B
+  │ {"city":"Austin","id":5745753746046976,"name":"Mandola
+  │ 's","owner_id":7890,"state":"TX","street_address":"321
+  │  South Mopac","zip_code":78751}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  1ms       327µs   (cache)      (cache)         (cache)         75ms             2ms        61µs      80ms  
+
+  ✓  201 status code
+  ✓  content is valid
+  ✓  The response content type is application.json
+
+↳ 4. get businesses and set count (0 points)
+  GET https://a2-jessicalee.wl.r.appspot.com/businesses  
+  200 OK ★ 57ms time ★ 252B↑ 1.47kB↓ size ★ 7↑ 9↓ headers ★ 0 cookies
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 1.14kB
+  │ [{"city":"Austin","id":5112644562321408,"name":"Mandol
+  │ a's","owner_id":6789,"state":"TX","street_address":"32
+  │ 1 South Mopac","zip_code":78751},{"city":"Austin","id"
+  │ :5143677177430016,"name":"Mandola's","owner_id":6789,"
+  │ state":"TX","street_address":"4900 N Lamar Blvd","zip_
+  │ code":78751},{"city":"Austin","id":5640825748848640,"n
+  │ ame":"Mandola's","owner_id":6789,"state":"TX","street_
+  │ address":"321 South Mopac","zip_code":78751},{"city":"
+  │ Austin","id":5700228501995520,"name":"Mandola's","owne
+  │ r_id":6789,"state":"TX","street_address":"321 South Mo
+  │ pac","zip_code":78751},{"city":"Austin","id":571035341
+  │ 7633792,"name":"Torchy Tacos","owner_id":6789,"state":
+  │ "TX","street_address":"5100 Burnet Road","zip_code":78
+  │ 703},{"city":"Austin","id":5745753746046976,"name":"Ma
+  │ ndola's","owner_id":7890,"state":"TX","street_address"
+  │ :"321 South Mopac","zip_code":78751},{"city":"Austin",
+  │ "id":5750704903815168,"name":"Mandola's Italian","owne
+  │ r_id":6789,"state":"TX","street_address":"4900 N Lamar
+  │  Blvd","zip_code":78751},{"city":"Austin","id":6243479
+  │ 118151680,"name":"Mandola's","owner_id":6789,"state":"
+  │ TX","street_address":"4900 N Lamar Blvd","zip_code":78
+  │ 751}]
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  1ms       236µs   (cache)      (cache)         (cache)         53ms             2ms        947µs     58ms  
+
+
+↳ 5. get all businesses for owner 1 (6 points)
+  GET https://a2-jessicalee.wl.r.appspot.com/owners/6789/businesses  
+  200 OK ★ 52ms time ★ 264B↑ 1.33kB↓ size ★ 7↑ 9↓ headers ★ 0 cookies
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 1kB
+  │ [{"city":"Austin","id":5112644562321408,"name":"Mandol
+  │ a's","owner_id":6789,"state":"TX","street_address":"32
+  │ 1 South Mopac","zip_code":78751},{"city":"Austin","id"
+  │ :5143677177430016,"name":"Mandola's","owner_id":6789,"
+  │ state":"TX","street_address":"4900 N Lamar Blvd","zip_
+  │ code":78751},{"city":"Austin","id":5640825748848640,"n
+  │ ame":"Mandola's","owner_id":6789,"state":"TX","street_
+  │ address":"321 South Mopac","zip_code":78751},{"city":"
+  │ Austin","id":5700228501995520,"name":"Mandola's","owne
+  │ r_id":6789,"state":"TX","street_address":"321 South Mo
+  │ pac","zip_code":78751},{"city":"Austin","id":571035341
+  │ 7633792,"name":"Torchy Tacos","owner_id":6789,"state":
+  │ "TX","street_address":"5100 Burnet Road","zip_code":78
+  │ 703},{"city":"Austin","id":5750704903815168,"name":"Ma
+  │ ndola's Italian","owner_id":6789,"state":"TX","street_
+  │ address":"4900 N Lamar Blvd","zip_code":78751},{"city"
+  │ :"Austin","id":6243479118151680,"name":"Mandola's","ow
+  │ ner_id":6789,"state":"TX","street_address":"4900 N Lam
+  │ ar Blvd","zip_code":78751}]
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  1ms       225µs   (cache)      (cache)         (cache)         48ms             2ms        768µs     52ms  
+
+  ✓  200 status code
+  ✓  Count must equal the value of businesses of this owner set by previous request
+  ✓  Count of total businesses must be at least 1 more than businesses of this owner
+  ✓  The response content type is application.json
+  ┌
+  │ '******* List businesses for owner total points = 6'
+  └
+
+↳ 6. delete business 204 (0 points)
+  DELETE https://a2-jessicalee.wl.r.appspot.com/businesses/6243479118151680  
+  204 No Content ★ 73ms time ★ 272B↑ 262B↓ size ★ 7↑ 6↓ headers ★ 0 cookies
+  ↓ text/html ★ text ★ html ★ utf8
+
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  1ms       216µs   (cache)      (cache)         (cache)         69ms             2ms        47µs      73ms  
+
+  ✓  204 no content
+
+↳ 7. delete 2nd business 204 (0 points)
+  DELETE https://a2-jessicalee.wl.r.appspot.com/businesses/5700228501995520  
+  204 No Content ★ 75ms time ★ 272B↑ 262B↓ size ★ 7↑ 6↓ headers ★ 0 cookies
+  ↓ text/html ★ text ★ html ★ utf8
+
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  1ms       225µs   (cache)      (cache)         (cache)         72ms             1ms        42µs      75ms  
+
+  ✓  204 no content
+
+↳ 8. delete 3rd business 204 (0 points)
+  DELETE https://a2-jessicalee.wl.r.appspot.com/businesses/5745753746046976  
+  204 No Content ★ 61ms time ★ 272B↑ 262B↓ size ★ 7↑ 6↓ headers ★ 0 cookies
+  ↓ text/html ★ text ★ html ★ utf8
+
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  1ms       213µs   (cache)      (cache)         (cache)         58ms             1ms        32µs      62ms  
+
+  ✓  204 no content
+
+❏ Reviews CRUD (24 points)
+↳ 1. add business  201 (0 points)
+  POST https://a2-jessicalee.wl.r.appspot.com/businesses  
+  201 Created ★ 47ms time ★ 459B↑ 397B↓ size ★ 9↑ 6↓ headers ★ 0 cookies
+  ┌ ↑ raw ★ 153B
+  │ {
+  │   "owner_id": 6789,
+  │   "name": "Torchy Tacos",
+  │   "street_address": "5100 Burnet Road",
+  │   "city": "Austin",
+  │   "state": "TX",
+  │   "zip_code": 78703
+  │ }
+  └ 
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 144B
+  │ {"city":"Austin","id":6268758825893888,"name":"Torchy 
+  │ Tacos","owner_id":6789,"state":"TX","street_address":"
+  │ 5100 Burnet Road","zip_code":78703}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  1ms       226µs   (cache)      (cache)         (cache)         45ms             1ms        58µs      48ms  
+
+  ✓  201 status code
+  ✓  content is valid
+  ✓  The response content type is application.json
+
+↳ 2. add review 201 (2 points)
+  POST https://a2-jessicalee.wl.r.appspot.com/reviews  
+  201 Created ★ 94ms time ★ 415B↑ 366B↓ size ★ 9↑ 6↓ headers ★ 0 cookies
+  ┌ ↑ raw ★ 112B
+  │ {
+  │   "user_id": 1234,
+  │   "business_id": 6268758825893888,
+  │   "stars": 4,
+  │   "review_text": "Excellent tacos!"
+  │ }
+  └ 
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 113B
+  │ {"business_id":6268758825893888,"id":5068721408180224,
+  │ "review_text":"Excellent tacos!","stars":4,"user_id":1
+  │ 234}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  1ms       183µs   (cache)      (cache)         (cache)         90ms             1ms        55µs      94ms  
+
+  ✓  201 status code
+  ✓  content is valid
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Review Test 2 points = 2'
+  │ '******* Review CRUD current points = 2'
+  └
+
+↳ 3. add review again 409 (1.5 points)
+  POST https://a2-jessicalee.wl.r.appspot.com/reviews  
+  409 Conflict ★ 62ms time ★ 415B↑ 395B↓ size ★ 9↑ 6↓ headers ★ 0 cookies
+  ┌ ↑ raw ★ 112B
+  │ {
+  │   "user_id": 1234,
+  │   "business_id": 6268758825893888,
+  │   "stars": 4,
+  │   "review_text": "Excellent tacos!"
+  │ }
+  └ 
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 141B
+  │ {"Error":"You have already submitted a review for this
+  │  business. You can update your previous review, or del
+  │ ete it and submit a new review"}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  1ms       223µs   (cache)      (cache)         (cache)         59ms             1ms        41µs      62ms  
+
+  ✓  409 status code
+  ✓  409 error message
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Review Test 3 points = 1.5'
+  │ '******* Review CRUD current points = 3.5'
+  └
+
+↳ 4. add review 400 (1 point)
+  POST https://a2-jessicalee.wl.r.appspot.com/reviews  
+  400 Bad Request ★ 35ms time ★ 399B↑ 336B↓ size ★ 9↑ 6↓ headers ★ 0 cookies
+  ┌ ↑ raw ★ 97B
+  │ {
+  │   "user_id": 1234,
+  │   "business_id": 6268758825893888,
+  │   "review_text": "Excellent tacos!"
+  │ }
+  └ 
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 80B
+  │ {"Error":"The request body is missing at least one of 
+  │ the required attributes"}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  1ms       355µs   (cache)      (cache)         (cache)         32ms             1ms        48µs      36ms  
+
+  ✓  400 status code
+  ✓  400 error message
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Review Test 4 points = 1'
+  │ '******* Review CRUD current points = 4.5'
+  └
+
+↳ 5. add review invalid business 404 (1.5 points)
+  POST https://a2-jessicalee.wl.r.appspot.com/reviews  
+  404 Not Found ★ 55ms time ★ 399B↑ 386B↓ size ★ 9↑ 9↓ headers ★ 0 cookies
+  ┌ ↑ raw ★ 97B
+  │ {
+  │   "user_id": 1234,
+  │   "business_id": 1,
+  │   "stars": 4,
+  │   "review_text": "Excellent tacos!"
+  │ }
+  └ 
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 53B
+  │ {"Error":"No business with this business_id exists"}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  1ms       520µs   (cache)      (cache)         (cache)         50ms             3ms        512µs     56ms  
+
+  ✓  404 status code
+  ✓  404 error message
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Review Test 5 points = 1.5'
+  │ '******* Review CRUD current points = 6'
+  └
+
+↳ 6. add review 2 no review_text 201 (2 points)
+  POST https://a2-jessicalee.wl.r.appspot.com/reviews  
+  201 Created ★ 188ms time ★ 376B↑ 332B↓ size ★ 9↑ 6↓ headers ★ 0 cookies
+  ┌ ↑ raw ★ 74B
+  │ {
+  │   "user_id": 4567,
+  │   "business_id": 6268758825893888,
+  │   "stars": 3
+  │ }
+  └ 
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 80B
+  │ {"business_id":6268758825893888,"id":6277439692996608,
+  │ "stars":3,"user_id":4567}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  1ms       251µs   (cache)      (cache)         (cache)         183ms            3ms        71µs      188ms 
+
+  ✓  201 status code
+  ✓  content is valid
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Review Test 61 points = 2'
+  │ '******* Review CRUD current points = 8'
+  └
+
+↳ 7. get review 200 (3 points)
+  GET https://a2-jessicalee.wl.r.appspot.com/reviews/5068721408180224  
+  200 OK ★ 41ms time ★ 266B↑ 439B↓ size ★ 7↑ 9↓ headers ★ 0 cookies
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 113B
+  │ {"business_id":6268758825893888,"id":5068721408180224,
+  │ "review_text":"Excellent tacos!","stars":4,"user_id":1
+  │ 234}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  1ms       221µs   (cache)      (cache)         (cache)         38ms             1ms        322µs     42ms  
+
+  ✓  200 status code
+  ✓  content is valid
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Review Test 7 points = 3'
+  │ '******* Review CRUD current points = 11'
+  └
+
+↳ 8. get review 404 (1 point)
+  GET https://a2-jessicalee.wl.r.appspot.com/reviews/1  
+  404 Not Found ★ 42ms time ★ 251B↑ 382B↓ size ★ 7↑ 9↓ headers ★ 0 cookies
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 49B
+  │ {"Error":"No review with this review_id exists"}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  953µs     170µs   (cache)      (cache)         (cache)         39ms             2ms        798µs     43ms  
+
+  ✓  404 status code
+  ✓  404 error message
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Review Test 8 points = 1'
+  │ '******* Review CRUD current points = 12'
+  └
+
+↳ 9. get second review 200 (1 points)
+  GET https://a2-jessicalee.wl.r.appspot.com/reviews/6277439692996608  
+  200 OK ★ 35ms time ★ 266B↑ 406B↓ size ★ 7↑ 9↓ headers ★ 0 cookies
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 80B
+  │ {"business_id":6268758825893888,"id":6277439692996608,
+  │ "stars":3,"user_id":4567}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  867µs     180µs   (cache)      (cache)         (cache)         33ms             1ms        681µs     36ms  
+
+  ✓  200 status code
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Review Test 9 points = 1'
+  │ '******* Review CRUD current points = 13'
+  └
+
+↳ 10. edit review (1 point)
+  PUT https://a2-jessicalee.wl.r.appspot.com/reviews/5068721408180224  
+  200 OK ★ 60ms time ★ 376B↑ 441B↓ size ★ 9↑ 9↓ headers ★ 0 cookies
+  ┌ ↑ raw ★ 58B
+  │ {
+  │   "stars": 5,
+  │   "review_text": "Queso is the best."
+  │ }
+  └ 
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 115B
+  │ {"business_id":6268758825893888,"id":5068721408180224,
+  │ "review_text":"Queso is the best.","stars":5,"user_id"
+  │ :1234}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  1ms       215µs   (cache)      (cache)         (cache)         57ms             2ms        913µs     61ms  
+
+  ✓  200 status code
+  ✓  content is valid
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Review Test 10 points = 1'
+  │ '******* Review CRUD current points = 14'
+  └
+
+↳ 11. get review after update 200 (1.5 points)
+  GET https://a2-jessicalee.wl.r.appspot.com/reviews/5068721408180224  
+  200 OK ★ 38ms time ★ 266B↑ 441B↓ size ★ 7↑ 9↓ headers ★ 0 cookies
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 115B
+  │ {"business_id":6268758825893888,"id":5068721408180224,
+  │ "review_text":"Queso is the best.","stars":5,"user_id"
+  │ :1234}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  893µs     184µs   (cache)      (cache)         (cache)         36ms             1ms        462µs     39ms  
+
+  ✓  200 status code
+  ✓  content is valid
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Review Test 11 points = 1.5'
+  │ '******* Review CRUD current points = 15.5'
+  └
+
+↳ 12. edit review with missing attribute 400 (1 point)
+  PUT https://a2-jessicalee.wl.r.appspot.com/reviews/5068721408180224  
+  400 Bad Request ★ 39ms time ★ 361B↑ 336B↓ size ★ 9↑ 6↓ headers ★ 0 cookies
+  ┌ ↑ raw ★ 43B
+  │ {
+  │   "review_text": "Queso is the best."
+  │ }
+  └ 
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 80B
+  │ {"Error":"The request body is missing at least one of 
+  │ the required attributes"}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  885µs     179µs   (cache)      (cache)         (cache)         37ms             1ms        23µs      39ms  
+
+  ✓  400 status code
+  ✓  400 error message
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Review Test 12 points = 1'
+  │ '******* Review CRUD current points = 16.5'
+  └
+
+↳ 13. edit review with invalid id 404 (1 point)
+  PUT https://a2-jessicalee.wl.r.appspot.com/reviews/1  
+  404 Not Found ★ 42ms time ★ 363B↑ 382B↓ size ★ 9↑ 9↓ headers ★ 0 cookies
+  ┌ ↑ raw ★ 60B
+  │ {
+  │   "stars": 5,
+  │   "review_text": "Queso is the best."
+  │ }
+  └ 
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 49B
+  │ {"Error":"No review with this review_id exists"}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  1ms       211µs   (cache)      (cache)         (cache)         39ms             1ms        348µs     43ms  
+
+  ✓  404 not found
+  ✓  404 error message
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Review Test 13 points = 1'
+  │ '******* Review CRUD current points = 17.5'
+  └
+
+↳ 14. edit review stars only (1.5 points)
+  PUT https://a2-jessicalee.wl.r.appspot.com/reviews/5068721408180224  
+  200 OK ★ 59ms time ★ 336B↑ 441B↓ size ★ 9↑ 9↓ headers ★ 0 cookies
+  ┌ ↑ raw ★ 18B
+  │ {
+  │   "stars": 4
+  │ }
+  └ 
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 115B
+  │ {"business_id":6268758825893888,"id":5068721408180224,
+  │ "review_text":"Queso is the best.","stars":4,"user_id"
+  │ :1234}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  940µs     357µs   (cache)      (cache)         (cache)         56ms             1ms        445µs     59ms  
+
+  ✓  200 status code
+  ✓  content is valid
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Review Test 14 points = 1.5'
+  │ '******* Review CRUD current points = 19'
+  └
+
+↳ 15. delete review 204 (2 points)
+  DELETE https://a2-jessicalee.wl.r.appspot.com/reviews/5068721408180224  
+  204 No Content ★ 54ms time ★ 269B↑ 262B↓ size ★ 7↑ 6↓ headers ★ 0 cookies
+  ↓ text/html ★ text ★ html ★ utf8
+
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  1ms       248µs   (cache)      (cache)         (cache)         51ms             2ms        63µs      54ms  
+
+  ✓  204 no content
+  ┌
+  │ '******* Review Test 15 points = 2'
+  │ '******* Review CRUD current points = 21'
+  └
+
+↳ 16. delete review just deleted 404 (1 point)
+  DELETE https://a2-jessicalee.wl.r.appspot.com/reviews/5068721408180224  
+  404 Not Found ★ 44ms time ★ 269B↑ 382B↓ size ★ 7↑ 9↓ headers ★ 0 cookies
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 49B
+  │ {"Error":"No review with this review_id exists"}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  1ms       267µs   (cache)      (cache)         (cache)         40ms             3ms        494µs     45ms  
+
+  ✓  404 not found
+  ✓  404 error message
+  ┌
+  │ '******* Review Test 16 points = 1'
+  │ '******* Review CRUD current points = 22'
+  └
+
+↳ 17. delete business 204 (0 points)
+  DELETE https://a2-jessicalee.wl.r.appspot.com/businesses/6268758825893888  
+  204 No Content ★ 88ms time ★ 272B↑ 262B↓ size ★ 7↑ 6↓ headers ★ 0 cookies
+  ↓ text/html ★ text ★ html ★ utf8
+
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  1ms       253µs   (cache)      (cache)         (cache)         84ms             2ms        44µs      88ms  
+
+  ✓  204 no content
+
+↳ 18. get second review business deleted 404 (2 points)
+  GET https://a2-jessicalee.wl.r.appspot.com/reviews/6277439692996608  
+  404 Not Found ★ 44ms time ★ 266B↑ 382B↓ size ★ 7↑ 9↓ headers ★ 0 cookies
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 49B
+  │ {"Error":"No review with this review_id exists"}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  1ms       207µs   (cache)      (cache)         (cache)         41ms             1ms        531µs     45ms  
+
+  ✓  404 status code
+  ✓  404 error message
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Review Test 18 points = 2'
+  │ '******* Review CRUD total points = 24'
+  └
+
+❏ List all reviews for user (6 points)
+↳ 1. add business 201 (0 points)
+  POST https://a2-jessicalee.wl.r.appspot.com/businesses  
+  201 Created ★ 43ms time ★ 457B↑ 395B↓ size ★ 9↑ 6↓ headers ★ 0 cookies
+  ┌ ↑ raw ★ 151B
+  │ {
+  │   "owner_id": 6789,
+  │   "name": "Mandola's",
+  │   "street_address": "4900 N Lamar Blvd",
+  │   "city": "Austin",
+  │   "state": "TX",
+  │   "zip_code": 78751
+  │ }
+  └ 
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 142B
+  │ {"city":"Austin","id":4809715754205184,"name":"Mandola
+  │ 's","owner_id":6789,"state":"TX","street_address":"490
+  │ 0 N Lamar Blvd","zip_code":78751}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  1ms       222µs   (cache)      (cache)         (cache)         40ms             1ms        41µs      43ms  
+
+  ✓  201 status code
+  ✓  content is valid
+  ✓  The response content type is application.json
+
+↳ 2. add second business 201 (0 points)
+  POST https://a2-jessicalee.wl.r.appspot.com/businesses  
+  201 Created ★ 59ms time ★ 455B↑ 393B↓ size ★ 9↑ 6↓ headers ★ 0 cookies
+  ┌ ↑ raw ★ 149B
+  │ {
+  │   "owner_id": 6789,
+  │   "name": "Mandola's",
+  │   "street_address": "321 South Mopac",
+  │   "city": "Austin",
+  │   "state": "TX",
+  │   "zip_code": 78751
+  │ }
+  └ 
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 140B
+  │ {"city":"Austin","id":5102723456303104,"name":"Mandola
+  │ 's","owner_id":6789,"state":"TX","street_address":"321
+  │  South Mopac","zip_code":78751}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  1ms       221µs   (cache)      (cache)         (cache)         56ms             1ms        35µs      59ms  
+
+  ✓  201 status code
+  ✓  content is valid
+  ✓  The response content type is application.json
+
+↳ 3. add review business 1 user 1 (0 points)
+  POST https://a2-jessicalee.wl.r.appspot.com/reviews  
+  201 Created ★ 76ms time ★ 415B↑ 366B↓ size ★ 9↑ 6↓ headers ★ 0 cookies
+  ┌ ↑ raw ★ 112B
+  │ {
+  │   "user_id": 1234,
+  │   "business_id": 4809715754205184,
+  │   "stars": 4,
+  │   "review_text": "Excellent tacos!"
+  │ }
+  └ 
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 113B
+  │ {"business_id":4809715754205184,"id":6192604894986240,
+  │ "review_text":"Excellent tacos!","stars":4,"user_id":1
+  │ 234}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  1ms       218µs   (cache)      (cache)         (cache)         72ms             2ms        30µs      76ms  
+
+  ✓  201 status code
+  ✓  content is valid
+  ✓  The response content type is application.json
+
+↳ 4. add review business 2 user 1 (0 points)
+  POST https://a2-jessicalee.wl.r.appspot.com/reviews  
+  201 Created ★ 90ms time ★ 415B↑ 366B↓ size ★ 9↑ 6↓ headers ★ 0 cookies
+  ┌ ↑ raw ★ 112B
+  │ {
+  │   "user_id": 1234,
+  │   "business_id": 5102723456303104,
+  │   "stars": 4,
+  │   "review_text": "Excellent queso!"
+  │ }
+  └ 
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 113B
+  │ {"business_id":5102723456303104,"id":5715948350734336,
+  │ "review_text":"Excellent queso!","stars":4,"user_id":1
+  │ 234}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  1ms       251µs   (cache)      (cache)         (cache)         86ms             3ms        67µs      91ms  
+
+  ✓  201 status code
+  ✓  content is valid
+  ✓  The response content type is application.json
+
+↳ 5. add review business 2 user 2 (0 points)
+  POST https://a2-jessicalee.wl.r.appspot.com/reviews  
+  201 Created ★ 66ms time ★ 415B↑ 366B↓ size ★ 9↑ 6↓ headers ★ 0 cookies
+  ┌ ↑ raw ★ 112B
+  │ {
+  │   "user_id": 4567,
+  │   "business_id": 5102723456303104,
+  │   "stars": 4,
+  │   "review_text": "Excellent queso!"
+  │ }
+  └ 
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 113B
+  │ {"business_id":5102723456303104,"id":6208710485475328,
+  │ "review_text":"Excellent queso!","stars":4,"user_id":4
+  │ 567}
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  1ms       223µs   (cache)      (cache)         (cache)         61ms             3ms        68µs      66ms  
+
+  ✓  201 status code
+  ✓  content is valid
+  ✓  The response content type is application.json
+
+↳ 6. get reviews for user 1 (6 points)
+  GET https://a2-jessicalee.wl.r.appspot.com/users/1234/reviews  
+  200 OK ★ 47ms time ★ 260B↑ 667B↓ size ★ 7↑ 9↓ headers ★ 0 cookies
+  ┌ ↓ application/json ★ text ★ json ★ utf8 ★ 341B
+  │ [{"business_id":5710353417633792,"id":5712837116690432
+  │ ,"review_text":"Excellent queso!","stars":4,"user_id":
+  │ 1234},{"business_id":5102723456303104,"id":57159483507
+  │ 34336,"review_text":"Excellent queso!","stars":4,"user
+  │ _id":1234},{"business_id":4809715754205184,"id":619260
+  │ 4894986240,"review_text":"Excellent tacos!","stars":4,
+  │ "user_id":1234}]
+  └
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  876µs     194µs   (cache)      (cache)         (cache)         45ms             1ms        698µs     48ms  
+
+  ✓  200 status code
+  ✓  The response content type is application.json
+  ✓  All reviews are for user_id_1
+  ✓  At least 2 reviews for user_id_1 exist
+  ┌
+  │ '******* List all reviews for user total points = 6'
+  └
+
+↳ 7. delete business 204 (0 points)
+  DELETE https://a2-jessicalee.wl.r.appspot.com/businesses/4809715754205184  
+  204 No Content ★ 84ms time ★ 272B↑ 262B↓ size ★ 7↑ 6↓ headers ★ 0 cookies
+  ↓ text/html ★ text ★ html ★ utf8
+
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  1ms       209µs   (cache)      (cache)         (cache)         80ms             3ms        50µs      85ms  
+
+  ✓  204 no content
+
+↳ 8. delete second business 204 (0 points)
+  DELETE https://a2-jessicalee.wl.r.appspot.com/businesses/5102723456303104  
+  204 No Content ★ 106ms time ★ 272B↑ 262B↓ size ★ 7↑ 6↓ headers ★ 0 cookies
+  ↓ text/html ★ text ★ html ★ utf8
+
+  prepare   wait    dns-lookup   tcp-handshake   ssl-handshake   transfer-start   download   process   total 
+  1ms       264µs   (cache)      (cache)         (cache)         102ms            2ms        41µs      106ms 
+
+  ✓  204 no content
+  ┌
+  │ '******* Businesses CRUD points = 30'
+  │ '******* Review CRUD points = 24'
+  │ '******* List businesses for owner points = 6'
+  │ '******* List all reviews for user points = 6'
+  │ '******* Total points for the assignment = 66'
+  └
+
+┌─────────────────────────┬────────────────────┬────────────────────┐
+│                         │           executed │             failed │
+├─────────────────────────┼────────────────────┼────────────────────┤
+│              iterations │                  1 │                  0 │
+├─────────────────────────┼────────────────────┼────────────────────┤
+│                requests │                 47 │                  0 │
+├─────────────────────────┼────────────────────┼────────────────────┤
+│            test-scripts │                 94 │                  0 │
+├─────────────────────────┼────────────────────┼────────────────────┤
+│      prerequest-scripts │                 49 │                  0 │
+├─────────────────────────┼────────────────────┼────────────────────┤
+│              assertions │                119 │                  0 │
+├─────────────────────────┴────────────────────┴────────────────────┤
+│ total run duration: 3.8s                                          │
+├───────────────────────────────────────────────────────────────────┤
+│ total data received: 6.99kB (approx)                              │
+├───────────────────────────────────────────────────────────────────┤
+│ average response time: 61ms [min: 30ms, max: 188ms, s.d.: 27ms]   │
+├───────────────────────────────────────────────────────────────────┤
+│ average DNS lookup time: 1ms [min: 1ms, max: 1ms, s.d.: 0µs]      │
+├───────────────────────────────────────────────────────────────────┤
+│ average first byte time: 57ms [min: 27ms, max: 183ms, s.d.: 25ms] │
+└───────────────────────────────────────────────────────────────────┘
