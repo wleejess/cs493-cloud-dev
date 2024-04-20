@@ -109,12 +109,12 @@ def get_owner_business(owner_id):
     query = client.query(kind=BUSINESSES)
     query_params = request.args
 
-    if('owner_id' in query_params):
-        owner_id = query_params['owner_id']
-        query.add_filter('owner_id', '==', int(owner_id))
+    if owner_id is not None:
+        query.add_filter('owner_id', '=', int(owner_id))
     results = list(query.fetch())
     for r in results:
         r['id'] = r.key.id
+    print(owner_id, results)
     return results
 
 @app.route('/reviews', methods=['POST'])
@@ -175,11 +175,18 @@ def check_params(content):
 def get_review(id):
     review_key = client.key(REVIEWS, id)
     review = client.get(key=review_key)
+    
     if review is None:
         return {"Error": "No review with this review_id exists"}, 404
-    else:
-        review['id'] = review.key.id
-        return review
+
+    business_key = client.key(BUSINESSES, review['business_id'])
+    business = client.get(key=business_key)
+    
+    if business is None:
+        return {"Error": "No review with this review_id exists"}, 404
+
+    review['id'] = review.key.id
+    return review
 
 @app.route('/reviews/<int:id>', methods=['PUT'])
 def put_review(id):
@@ -223,9 +230,8 @@ def get_user_reviews(user_id):
     query = client.query(kind=REVIEWS)
     query_params = request.args
 
-    if('user_id' in query_params):
-        user_id = query_params['user_id']
-        query.add_filter('user_id', '=', int(id))
+    if user_id is not None:
+        query.add_filter('user_id', '=', int(user_id))
     results = list(query.fetch())
     for r in results:
         r['id'] = r.key.id
