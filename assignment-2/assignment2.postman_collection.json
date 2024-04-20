@@ -1,0 +1,2733 @@
+{
+	"info": {
+		"_postman_id": "6f5eeab2-0a9f-4843-8eac-d863068fd319",
+		"name": "assignment2",
+		"description": "This collection tests the API specification given for Assignment 2.  \nIn order to run this collection, use the environment file assignment2.environment.json. That environment file has some predefined variables needed by the tests in this collection. There is only one variable in that file that you need to set when running your collection\n\napp_url\n\n- Set the value of this variable to the URL of your app. E.g., when running locally set it to [http://127.0.0.1:8080](http://127.0.0.1:8080). When running the app on GCP. set it to the URL of your app on GCP, e.g., [https://a2-chaudhrn-osu.uc.r.appspot.com](https://a2-chaudhrn-osu.uc.r.appspot.com)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9037348"
+	},
+	"item": [
+		{
+			"name": "Businesses CRUD (30 points)",
+			"item": [
+				{
+					"name": "1. add business 201 (2 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"business_id_1\", pm.response.json()[\"id\"]);",
+									"",
+									"let points = 0; ",
+									"",
+									"pm.test(\"201 status code\", function () {",
+									"    pm.response.to.have.status(201);",
+									"    points += 0.5",
+									"});",
+									"",
+									"",
+									"pm.test(\"content is valid\", function () {",
+									"    pm.expect(pm.response.json()[\"owner_id\"]).to.eq(",
+									"        parseInt(pm.environment.get(\"owner_id_1\")));",
+									"    pm.expect(pm.response.json()[\"name\"]).to.eq(\"Mandola's\");",
+									"    pm.expect(pm.response.json()[\"street_address\"]).to.eq(\"4900 N Lamar Blvd\");",
+									"    pm.expect(pm.response.json()[\"city\"]).to.eq(\"Austin\");",
+									"    pm.expect(pm.response.json()[\"state\"]).to.eq(\"TX\");",
+									"    pm.expect(pm.response.json()[\"zip_code\"]).to.eq(78751);",
+									"    pm.expect(pm.response.json()).to.have.property(\"id\");",
+									"    pm.expect(pm.response.json()[\"id\"]).to.be.a('number')",
+									"    points += 1",
+									"});",
+									"",
+									"pm.test(\"The response content type is application.json\", function(){",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');",
+									"    points += 0.5",
+									"});",
+									"",
+									"console.log('******* Businesses Test 1 points = ' + points);",
+									"",
+									"console.log('******* Businesses CRUD current points = ' + points);",
+									"",
+									"pm.environment.set(\"points_business_crud\", points);",
+									"",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"points_business_crud\", 0);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"owner_id\": {{owner_id_1}},\r\n  \"name\": \"Mandola's\",\r\n  \"street_address\": \"4900 N Lamar Blvd\",\r\n  \"city\": \"Austin\",\r\n  \"state\": \"TX\",\r\n  \"zip_code\": 78751\r\n}"
+						},
+						"url": {
+							"raw": "{{app_url}}/businesses",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"businesses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. add business with missing attributes 400 (2 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let points = 0; ",
+									"",
+									"pm.test(\"400 status code\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    points += 0.75",
+									"});",
+									"",
+									"pm.test(\"400 error message\", function () {",
+									"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"The request body is missing at least one of the required attributes\");",
+									"     points += 0.75",
+									"});",
+									"",
+									"pm.test(\"The response content type is application.json\", function(){",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');",
+									"    points += 0.5",
+									"});",
+									"",
+									"",
+									"console.log('******* Businesses Test 2 points = ' + points);",
+									"",
+									"let points_total = pm.environment.get(\"points_business_crud\") + points",
+									"",
+									"console.log('******* Businesses CRUD current points = ' + points_total);",
+									"",
+									"pm.environment.set(\"points_business_crud\", points_total);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"owner_id\": {{owner_id_1}},\r\n  \"name\": \"Torchy Tacos\",\r\n  \"street_address\": \"4900 N Lamar Blvd\",\r\n  \"city\": \"Austin\",\r\n  \"zip_code\": 78751\r\n}"
+						},
+						"url": {
+							"raw": "{{app_url}}/businesses",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"businesses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3. add second business 201 (2 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let points = 0; ",
+									"",
+									"pm.environment.set(\"business_id_2\", pm.response.json()[\"id\"]);",
+									"",
+									"pm.test(\"201 status code\", function () {",
+									"    pm.response.to.have.status(201);",
+									"    points += 0.5",
+									"});",
+									"",
+									"",
+									"pm.test(\"content is valid\", function () {",
+									"    pm.expect(pm.response.json()[\"owner_id\"]).to.eq(",
+									"        parseInt(pm.environment.get(\"owner_id_1\")));",
+									"    pm.expect(pm.response.json()[\"name\"]).to.eq(\"Mandola's\");",
+									"    pm.expect(pm.response.json()[\"street_address\"]).to.eq(\"321 South Mopac\");",
+									"    pm.expect(pm.response.json()[\"city\"]).to.eq(\"Austin\");",
+									"    pm.expect(pm.response.json()[\"state\"]).to.eq(\"TX\");",
+									"    pm.expect(pm.response.json()[\"zip_code\"]).to.eq(78751);",
+									"    pm.expect(pm.response.json()).to.have.property(\"id\");",
+									"    pm.expect(pm.response.json()[\"id\"]).to.be.a('number')",
+									"    points += 1",
+									"});",
+									"",
+									"pm.test(\"The response content type is application.json\", function(){",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');",
+									"    points += 0.5",
+									"});",
+									"",
+									"console.log('******* Businesses Test 3 points = ' + points);",
+									"",
+									"let points_total = pm.environment.get(\"points_business_crud\") + points",
+									"",
+									"console.log('******* Businesses CRUD current points = ' + points_total);",
+									"",
+									"pm.environment.set(\"points_business_crud\", points_total);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"owner_id\": {{owner_id_1}},\r\n  \"name\": \"Mandola's\",\r\n  \"street_address\": \"321 South Mopac\",\r\n  \"city\": \"Austin\",\r\n  \"state\": \"TX\",\r\n  \"zip_code\": 78751\r\n}"
+						},
+						"url": {
+							"raw": "{{app_url}}/businesses",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"businesses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4. get business 200 (4 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let points = 0; ",
+									"",
+									"pm.test(\"200 status code\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    points += 0.5",
+									"});",
+									"",
+									"",
+									"pm.test(\"content is valid\", function () {",
+									"    pm.expect(pm.response.json()[\"owner_id\"]).to.eq(",
+									"        parseInt(pm.environment.get(\"owner_id_1\")));",
+									"    pm.expect(pm.response.json()[\"name\"]).to.eq(\"Mandola's\");",
+									"    pm.expect(pm.response.json()[\"street_address\"]).to.eq(\"4900 N Lamar Blvd\");",
+									"    pm.expect(pm.response.json()[\"city\"]).to.eq(\"Austin\");",
+									"    pm.expect(pm.response.json()[\"state\"]).to.eq(\"TX\");",
+									"    pm.expect(pm.response.json()[\"zip_code\"]).to.eq(78751);",
+									"    points += 3",
+									"});",
+									"",
+									"pm.test(\"The response content type is application.json\", function(){",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');",
+									"    points += 0.5",
+									"});",
+									"",
+									"",
+									"console.log('******* Businesses Test 4 points = ' + points);",
+									"",
+									"let points_total = pm.environment.get(\"points_business_crud\") + points",
+									"",
+									"console.log('******* Businesses CRUD current points = ' + points_total);",
+									"",
+									"pm.environment.set(\"points_business_crud\", points_total);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{app_url}}/businesses/{{business_id_1}}",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"businesses",
+								"{{business_id_1}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5. get business with invalid id 404 (2 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let points = 0; ",
+									"",
+									"pm.test(\"404 not found\", function () {",
+									"    pm.response.to.have.status(404);",
+									"    points += 0.5",
+									"});",
+									"",
+									"",
+									"pm.test(\"404 error message\", function () {",
+									"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"No business with this business_id exists\");",
+									"     points += 1",
+									"});",
+									"",
+									"pm.test(\"The response content type is application.json\", function(){",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');",
+									"    points += 0.5",
+									"});",
+									"",
+									"",
+									"console.log('******* Businesses Test 5 points = ' + points);",
+									"",
+									"let points_total = pm.environment.get(\"points_business_crud\") + points",
+									"",
+									"console.log('******* Businesses CRUD current points = ' + points_total);",
+									"",
+									"pm.environment.set(\"points_business_crud\", points_total);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{app_url}}/businesses/{{invalid_business_id}}",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"businesses",
+								"{{invalid_business_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6. get all businesses 200 (6 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let points = 0; ",
+									"",
+									"pm.test(\"200 status code\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    points += 0.5;",
+									"});",
+									"",
+									"",
+									"pm.test(\"At least two businesses exists\", function(){",
+									"   pm.expect(Object.keys(pm.response.json()).length).to.be.at.least(2);",
+									"   // Greader: also visually inspect the response",
+									"   points += 5;",
+									"});",
+									"",
+									"pm.test(\"The response content type is application.json\", function(){",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');",
+									"    points += 0.5;",
+									"});",
+									"",
+									"",
+									"console.log('******* Businesses Test 6 points = ' + points);",
+									"",
+									"let points_total = pm.environment.get(\"points_business_crud\") + points",
+									"",
+									"console.log('******* Businesses CRUD current points = ' + points_total);",
+									"",
+									"pm.environment.set(\"points_business_crud\", points_total);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{app_url}}/businesses",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"businesses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7. edit business 200 (2 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let points = 0; ",
+									"",
+									"pm.test(\"200 status code\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    points += 0.5;",
+									"});",
+									"",
+									"pm.test(\"content is valid\", function () {",
+									"    pm.expect(pm.response.json()[\"owner_id\"]).to.eq(",
+									"        parseInt(pm.environment.get(\"owner_id_1\")));",
+									"    pm.expect(pm.response.json()[\"name\"]).to.eq(\"Mandola's Italian\");",
+									"    pm.expect(pm.response.json()[\"street_address\"]).to.eq(\"4900 N Lamar Blvd\");",
+									"    pm.expect(pm.response.json()[\"city\"]).to.eq(\"Austin\");",
+									"    pm.expect(pm.response.json()[\"state\"]).to.eq(\"TX\");",
+									"    pm.expect(pm.response.json()[\"zip_code\"]).to.eq(78751);",
+									"    points += 1",
+									"});",
+									"",
+									"pm.test(\"The response content type is application.json\", function(){",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');",
+									"    points += 0.5",
+									"});",
+									"",
+									"console.log('******* Businesses Test 7 points = ' + points);",
+									"",
+									"let points_total = pm.environment.get(\"points_business_crud\") + points",
+									"",
+									"console.log('******* Businesses CRUD current points = ' + points_total);",
+									"",
+									"pm.environment.set(\"points_business_crud\", points_total);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"owner_id\": {{owner_id_1}},\r\n  \"name\": \"Mandola's Italian\",\r\n  \"street_address\": \"4900 N Lamar Blvd\",\r\n  \"city\": \"Austin\",\r\n  \"state\": \"TX\",\r\n  \"zip_code\": 78751\r\n}"
+						},
+						"url": {
+							"raw": "{{app_url}}/businesses/{{business_id_1}}",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"businesses",
+								"{{business_id_1}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8. get business after update 200 (2 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let points = 0; ",
+									"",
+									"pm.test(\"200 status code\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    points += 0.5;",
+									"});",
+									"",
+									"",
+									"pm.test(\"content is valid\", function () {",
+									"    pm.expect(pm.response.json()[\"owner_id\"]).to.eq(",
+									"        parseInt(pm.environment.get(\"owner_id_1\")));",
+									"    pm.expect(pm.response.json()[\"name\"]).to.eq(\"Mandola's Italian\");",
+									"    pm.expect(pm.response.json()[\"street_address\"]).to.eq(\"4900 N Lamar Blvd\");",
+									"    pm.expect(pm.response.json()[\"city\"]).to.eq(\"Austin\");",
+									"    pm.expect(pm.response.json()[\"state\"]).to.eq(\"TX\");",
+									"    pm.expect(pm.response.json()[\"zip_code\"]).to.eq(78751);",
+									"    points += 1;",
+									"});",
+									"",
+									"pm.test(\"The response content type is application.json\", function(){",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');",
+									"    points += 0.5;",
+									"});",
+									"",
+									"console.log('******* Businesses Test 8 points = ' + points);",
+									"",
+									"let points_total = pm.environment.get(\"points_business_crud\") + points",
+									"",
+									"console.log('******* Businesses CRUD current points = ' + points_total);",
+									"",
+									"pm.environment.set(\"points_business_crud\", points_total);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{app_url}}/businesses/{{business_id_1}}",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"businesses",
+								"{{business_id_1}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "9. edit business with missing attributes 400 (1 point)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let points = 0; ",
+									"",
+									"pm.test(\"400 status code\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    points += 0.5;",
+									"});",
+									"",
+									"pm.test(\"400 error message\", function () {",
+									"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"The request body is missing at least one of the required attributes\");",
+									"     points += 0.25;",
+									"});",
+									"",
+									"pm.test(\"The response content type is application.json\", function(){",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');",
+									"    points += 0.25;",
+									"});",
+									"",
+									"console.log('******* Businesses Test 9 points = ' + points);",
+									"",
+									"let points_total = pm.environment.get(\"points_business_crud\") + points",
+									"",
+									"console.log('******* Businesses CRUD current points = ' + points_total);",
+									"",
+									"pm.environment.set(\"points_business_crud\", points_total);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"owner_id\": 123,\r\n  \"name\": \"Torchy Tacos\",\r\n  \"street_address\": \"4900 N Lamar Blvd\",\r\n  \"city\": \"Austin\",\r\n  \"zip_code\": 78751\r\n}"
+						},
+						"url": {
+							"raw": "{{app_url}}/businesses/{{business_id_1}}",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"businesses",
+								"{{business_id_1}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "10. edit business with invalid id 404 (1 point)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let points = 0; ",
+									"",
+									"pm.test(\"404 not found\", function () {",
+									"    pm.response.to.have.status(404);",
+									"    points += 0.5;",
+									"});",
+									"",
+									"",
+									"pm.test(\"404 error message\", function () {",
+									"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"No business with this business_id exists\");",
+									"     points += 0.25;",
+									"});",
+									"",
+									"pm.test(\"The response content type is application.json\", function(){",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');",
+									"    points += 0.25;",
+									"});",
+									"",
+									"console.log('******* Businesses Test 10 points = ' + points);",
+									"",
+									"let points_total = pm.environment.get(\"points_business_crud\") + points",
+									"",
+									"console.log('******* Businesses CRUD current points = ' + points_total);",
+									"",
+									"pm.environment.set(\"points_business_crud\", points_total);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"owner_id\": {{owner_id_1}},\r\n  \"name\": \"Mandola's Italian\",\r\n  \"street_address\": \"4900 N Lamar Blvd\",\r\n  \"city\": \"Austin\",\r\n  \"state\": \"TX\",\r\n  \"zip_code\": 78751\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{app_url}}/businesses/{{invalid_business_id}}",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"businesses",
+								"{{invalid_business_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "11. delete business 204 (2 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let points = 0; ",
+									"",
+									"pm.test(\"204 no content\", function () {",
+									"    pm.response.to.have.status(204);",
+									"    points += 2;",
+									"});",
+									"",
+									"console.log('******* Businesses Test 11 points = ' + points);",
+									"",
+									"let points_total = pm.environment.get(\"points_business_crud\") + points",
+									"",
+									"console.log('******* Businesses CRUD current points = ' + points_total);",
+									"",
+									"pm.environment.set(\"points_business_crud\", points_total);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{app_url}}/businesses/{{business_id_1}}",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"businesses",
+								"{{business_id_1}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "12. delete business just deleted 404 (2 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let points = 0; ",
+									"",
+									"pm.test(\"404 not found\", function () {",
+									"    pm.response.to.have.status(404);",
+									"    points += 1;",
+									"});",
+									"",
+									"",
+									"pm.test(\"404 error message\", function () {",
+									"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"No business with this business_id exists\");",
+									"     points += 1;",
+									"});",
+									"",
+									"",
+									"console.log('******* Businesses Test 12 points = ' + points);",
+									"",
+									"let points_total = pm.environment.get(\"points_business_crud\") + points",
+									"",
+									"console.log('******* Businesses CRUD current points = ' + points_total);",
+									"",
+									"pm.environment.set(\"points_business_crud\", points_total);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{app_url}}/businesses/{{business_id_1}}",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"businesses",
+								"{{business_id_1}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "13. delete second business 204 (2 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let points = 0; ",
+									"",
+									"pm.test(\"204 no content\", function () {",
+									"    pm.response.to.have.status(204);",
+									"    points += 2;",
+									"});",
+									"",
+									"",
+									"console.log('******* Businesses Test 13 points = ' + points);",
+									"",
+									"let points_total = pm.environment.get(\"points_business_crud\") + points",
+									"",
+									"console.log('******* Businesses CRUD total points = ' + points_total);",
+									"",
+									"pm.environment.set(\"points_business_crud\", points_total);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{app_url}}/businesses/{{business_id_2}}",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"businesses",
+								"{{business_id_2}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "List businesses for owner (6 points)",
+			"item": [
+				{
+					"name": "1. add business for owner 1 201 (0 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"business_id_1\", pm.response.json()[\"id\"]);",
+									"",
+									"pm.test(\"201 status code\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"",
+									"pm.test(\"content is valid\", function () {",
+									"    pm.expect(pm.response.json()[\"owner_id\"]).to.eq(",
+									"        parseInt(pm.environment.get(\"owner_id_1\")));",
+									"    pm.expect(pm.response.json()[\"name\"]).to.eq(\"Mandola's\");",
+									"    pm.expect(pm.response.json()[\"street_address\"]).to.eq(\"4900 N Lamar Blvd\");",
+									"    pm.expect(pm.response.json()[\"city\"]).to.eq(\"Austin\");",
+									"    pm.expect(pm.response.json()[\"state\"]).to.eq(\"TX\");",
+									"    pm.expect(pm.response.json()[\"zip_code\"]).to.eq(78751);",
+									"});",
+									"",
+									"pm.test(\"The response content type is application.json\", function(){",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"owner_id\": {{owner_id_1}},\r\n  \"name\": \"Mandola's\",\r\n  \"street_address\": \"4900 N Lamar Blvd\",\r\n  \"city\": \"Austin\",\r\n  \"state\": \"TX\",\r\n  \"zip_code\": 78751\r\n}"
+						},
+						"url": {
+							"raw": "{{app_url}}/businesses",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"businesses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. add 2nd business for owner 1 201 (0 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"business_id_2\", pm.response.json()[\"id\"]);",
+									"",
+									"pm.test(\"201 status code\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"",
+									"pm.test(\"content is valid\", function () {",
+									"    pm.expect(pm.response.json()[\"owner_id\"]).to.eq(",
+									"        parseInt(pm.environment.get(\"owner_id_1\")));",
+									"    pm.expect(pm.response.json()[\"name\"]).to.eq(\"Mandola's\");",
+									"    pm.expect(pm.response.json()[\"street_address\"]).to.eq(\"321 South Mopac\");",
+									"    pm.expect(pm.response.json()[\"city\"]).to.eq(\"Austin\");",
+									"    pm.expect(pm.response.json()[\"state\"]).to.eq(\"TX\");",
+									"    pm.expect(pm.response.json()[\"zip_code\"]).to.eq(78751);",
+									"});",
+									"",
+									"pm.test(\"The response content type is application.json\", function(){",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"owner_id\": {{owner_id_1}},\r\n  \"name\": \"Mandola's\",\r\n  \"street_address\": \"321 South Mopac\",\r\n  \"city\": \"Austin\",\r\n  \"state\": \"TX\",\r\n  \"zip_code\": 78751\r\n}"
+						},
+						"url": {
+							"raw": "{{app_url}}/businesses",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"businesses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3. add business for owner 2 (0 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"business_id_3\", pm.response.json()[\"id\"]);",
+									"",
+									"pm.test(\"201 status code\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"",
+									"pm.test(\"content is valid\", function () {",
+									"    pm.expect(pm.response.json()[\"owner_id\"]).to.eq(",
+									"        parseInt(pm.environment.get(\"owner_id_2\")));",
+									"    pm.expect(pm.response.json()[\"name\"]).to.eq(\"Mandola's\");",
+									"    pm.expect(pm.response.json()[\"street_address\"]).to.eq(\"321 South Mopac\");",
+									"    pm.expect(pm.response.json()[\"city\"]).to.eq(\"Austin\");",
+									"    pm.expect(pm.response.json()[\"state\"]).to.eq(\"TX\");",
+									"    pm.expect(pm.response.json()[\"zip_code\"]).to.eq(78751);",
+									"});",
+									"",
+									"pm.test(\"The response content type is application.json\", function(){",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"owner_id\": {{owner_id_2}},\r\n  \"name\": \"Mandola's\",\r\n  \"street_address\": \"321 South Mopac\",\r\n  \"city\": \"Austin\",\r\n  \"state\": \"TX\",\r\n  \"zip_code\": 78751\r\n}"
+						},
+						"url": {
+							"raw": "{{app_url}}/businesses",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"businesses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4. get businesses and set count (0 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"business_count\", ",
+									"    pm.response.json().length);",
+									"",
+									"pm.environment.set(\"owner_1_business_count\", ",
+									"    pm.response.json().filter((b) => b.owner_id === parseInt(pm.environment.get(\"owner_id_1\"))).length);",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{app_url}}/businesses",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"businesses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5. get all businesses for owner 1 (6 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let points = 0;\r",
+									"\r",
+									"pm.test(\"200 status code\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    points += 0.5;\r",
+									"}); \r",
+									"\r",
+									"pm.test(\"Count must equal the value of businesses of this owner set by previous request\", function(){\r",
+									"   pm.expect(pm.response.json().length).to.equal(pm.environment.get(\"owner_1_business_count\"));\r",
+									"   points += 4;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Count of total businesses must be at least 1 more than businesses of this owner\", function(){\r",
+									"   pm.expect(pm.response.json().length).to.be.lessThan(pm.environment.get(\"business_count\"));\r",
+									"   points += 1;\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"The response content type is application.json\", function(){\r",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');\r",
+									"    points += 0.5;\r",
+									"});\r",
+									"\r",
+									"console.log('******* List businesses for owner total points = ' + points);\r",
+									"\r",
+									"pm.environment.set(\"points_list_businesses\", points);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{app_url}}/owners/{{owner_id_1}}/businesses",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"owners",
+								"{{owner_id_1}}",
+								"businesses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6. delete business 204 (0 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"204 no content\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{app_url}}/businesses/{{business_id_1}}",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"businesses",
+								"{{business_id_1}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7. delete 2nd business 204 (0 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"204 no content\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{app_url}}/businesses/{{business_id_2}}",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"businesses",
+								"{{business_id_2}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8. delete 3rd business 204 (0 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"204 no content\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{app_url}}/businesses/{{business_id_3}}",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"businesses",
+								"{{business_id_3}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Reviews CRUD (24 points)",
+			"item": [
+				{
+					"name": "1. add business  201 (0 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"business_id_2\", pm.response.json()[\"id\"]);",
+									"",
+									"pm.test(\"201 status code\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"",
+									"pm.test(\"content is valid\", function () {",
+									"    pm.expect(pm.response.json()[\"owner_id\"]).to.eq(",
+									"        parseInt(pm.environment.get(\"owner_id_1\")));",
+									"    pm.expect(pm.response.json()[\"name\"]).to.eq(\"Torchy Tacos\");",
+									"    pm.expect(pm.response.json()[\"street_address\"]).to.eq(\"5100 Burnet Road\");",
+									"    pm.expect(pm.response.json()[\"city\"]).to.eq(\"Austin\");",
+									"    pm.expect(pm.response.json()[\"state\"]).to.eq(\"TX\");",
+									"    pm.expect(pm.response.json()[\"zip_code\"]).to.eq(78703);",
+									"});",
+									"",
+									"pm.test(\"The response content type is application.json\", function(){",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"points_review_crud\", 0);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"owner_id\": {{owner_id_1}},\r\n  \"name\": \"Torchy Tacos\",\r\n  \"street_address\": \"5100 Burnet Road\",\r\n  \"city\": \"Austin\",\r\n  \"state\": \"TX\",\r\n  \"zip_code\": 78703\r\n}"
+						},
+						"url": {
+							"raw": "{{app_url}}/businesses",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"businesses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. add review 201 (2 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let points = 0; ",
+									"",
+									"pm.environment.set(\"reivew_id_1\", pm.response.json()[\"id\"]);",
+									"",
+									"pm.test(\"201 status code\", function () {",
+									"    pm.response.to.have.status(201);",
+									"    points += 0.5;",
+									"});",
+									"",
+									"",
+									"pm.test(\"content is valid\", function () {",
+									"    pm.expect(pm.response.json()[\"user_id\"]).to.eq(",
+									"        parseInt(pm.environment.get(\"user_id_1\")));",
+									"    pm.expect(pm.response.json()[\"business_id\"]).to.eq(",
+									"        pm.environment.get(\"business_id_2\"));",
+									"    pm.expect(pm.response.json()[\"stars\"]).to.eq(4);",
+									"    pm.expect(pm.response.json()[\"review_text\"]).to.eq(\"Excellent tacos!\");",
+									"    pm.expect(pm.response.json()).to.have.property(\"id\");",
+									"    pm.expect(pm.response.json()[\"id\"]).to.be.a('number')",
+									"    points += 1;",
+									"});",
+									"",
+									"pm.test(\"The response content type is application.json\", function(){",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');",
+									"    points += 0.5;",
+									"});",
+									"",
+									"console.log('******* Review Test 2 points = ' + points);",
+									"",
+									"let points_current = pm.environment.get(\"points_review_crud\") + points",
+									"",
+									"console.log('******* Review CRUD current points = ' + points_current);",
+									"",
+									"pm.environment.set(\"points_review_crud\", points_current);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user_id\": {{user_id_1}},\r\n  \"business_id\": {{business_id_2}},\r\n  \"stars\": 4,\r\n  \"review_text\": \"Excellent tacos!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{app_url}}/reviews",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3. add review again 409 (1.5 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let points = 0; ",
+									"",
+									"pm.test(\"409 status code\", function () {",
+									"    pm.response.to.have.status(409);",
+									"    points += 0.5;",
+									"});",
+									"",
+									"pm.test(\"409 error message\", function () {",
+									"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"You have already submitted a review for this business. You can update your previous review, or delete it and submit a new review\");",
+									"     points += 0.5;",
+									"});",
+									"",
+									"pm.test(\"The response content type is application.json\", function(){",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');",
+									"    points += 0.5;",
+									"});",
+									"",
+									"console.log('******* Review Test 3 points = ' + points);",
+									"",
+									"let points_current = pm.environment.get(\"points_review_crud\") + points",
+									"",
+									"console.log('******* Review CRUD current points = ' + points_current);",
+									"",
+									"pm.environment.set(\"points_review_crud\", points_current);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user_id\": {{user_id_1}},\r\n  \"business_id\": {{business_id_2}},\r\n  \"stars\": 4,\r\n  \"review_text\": \"Excellent tacos!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{app_url}}/reviews",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4. add review 400 (1 point)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let points = 0; ",
+									"",
+									"pm.test(\"400 status code\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    points += 0.5;",
+									"});",
+									"",
+									"pm.test(\"400 error message\", function () {",
+									"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"The request body is missing at least one of the required attributes\");",
+									"     points += 0.25;",
+									"});",
+									"",
+									"",
+									"pm.test(\"The response content type is application.json\", function(){",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');",
+									"    points += 0.25;",
+									"});",
+									"",
+									"console.log('******* Review Test 4 points = ' + points);",
+									"",
+									"let points_current = pm.environment.get(\"points_review_crud\") + points",
+									"",
+									"console.log('******* Review CRUD current points = ' + points_current);",
+									"",
+									"pm.environment.set(\"points_review_crud\", points_current);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user_id\": {{user_id_1}},\r\n  \"business_id\": {{business_id_2}},\r\n  \"review_text\": \"Excellent tacos!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{app_url}}/reviews",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5. add review invalid business 404 (1.5 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let points = 0; ",
+									"",
+									"pm.test(\"404 status code\", function () {",
+									"    pm.response.to.have.status(404);",
+									"    points += 0.5;",
+									"});",
+									"",
+									"pm.test(\"404 error message\", function () {",
+									"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"No business with this business_id exists\");",
+									"     points += 0.5;",
+									"});",
+									"",
+									"",
+									"pm.test(\"The response content type is application.json\", function(){",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');",
+									"    points += 0.5;",
+									"});",
+									"",
+									"console.log('******* Review Test 5 points = ' + points);",
+									"",
+									"let points_current = pm.environment.get(\"points_review_crud\") + points",
+									"",
+									"console.log('******* Review CRUD current points = ' + points_current);",
+									"",
+									"pm.environment.set(\"points_review_crud\", points_current);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user_id\": {{user_id_1}},\r\n  \"business_id\": {{invalid_business_id}},\r\n  \"stars\": 4,\r\n  \"review_text\": \"Excellent tacos!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{app_url}}/reviews",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6. add review 2 no review_text 201 (2 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let points = 0; ",
+									"",
+									"pm.environment.set(\"reivew_id_2\", pm.response.json()[\"id\"]);",
+									"",
+									"pm.test(\"201 status code\", function () {",
+									"    pm.response.to.have.status(201);",
+									"    points += 0.5;",
+									"});",
+									"",
+									"",
+									"pm.test(\"content is valid\", function () {",
+									"    pm.expect(pm.response.json()[\"user_id\"]).to.eq(",
+									"        parseInt(pm.environment.get(\"user_id_2\")));",
+									"    pm.expect(pm.response.json()[\"business_id\"]).to.eq(",
+									"        pm.environment.get(\"business_id_2\"));",
+									"    pm.expect(pm.response.json()[\"stars\"]).to.eq(3);",
+									"    pm.expect(pm.response.json()).to.have.property(\"id\");",
+									"    pm.expect(pm.response.json()[\"id\"]).to.be.a('number')",
+									"    points += 1;",
+									"});",
+									"",
+									"pm.test(\"The response content type is application.json\", function(){",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');",
+									"    points += 0.5;",
+									"});",
+									"",
+									"console.log('******* Review Test 61 points = ' + points);",
+									"",
+									"let points_current = pm.environment.get(\"points_review_crud\") + points",
+									"",
+									"console.log('******* Review CRUD current points = ' + points_current);",
+									"",
+									"pm.environment.set(\"points_review_crud\", points_current);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user_id\": {{user_id_2}},\r\n  \"business_id\": {{business_id_2}},\r\n  \"stars\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{app_url}}/reviews",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7. get review 200 (3 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let points = 0; \r",
+									"\r",
+									"pm.test(\"200 status code\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    points += 0.5;\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"content is valid\", function () {\r",
+									"    pm.expect(pm.response.json()[\"user_id\"]).to.eq(\r",
+									"        parseInt(pm.environment.get(\"user_id_1\")));\r",
+									"    pm.expect(pm.response.json()[\"business_id\"]).to.eq(\r",
+									"        pm.environment.get(\"business_id_2\"));\r",
+									"    pm.expect(pm.response.json()[\"stars\"]).to.eq(4);\r",
+									"    pm.expect(pm.response.json()[\"review_text\"]).to.eq(\"Excellent tacos!\");\r",
+									"    points += 2;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"The response content type is application.json\", function(){\r",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');\r",
+									"    points += 0.5;\r",
+									"});\r",
+									"\r",
+									"console.log('******* Review Test 7 points = ' + points);\r",
+									"\r",
+									"let points_current = pm.environment.get(\"points_review_crud\") + points\r",
+									"\r",
+									"console.log('******* Review CRUD current points = ' + points_current);\r",
+									"\r",
+									"pm.environment.set(\"points_review_crud\", points_current);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{app_url}}/reviews/{{reivew_id_1}}",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"reviews",
+								"{{reivew_id_1}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8. get review 404 (1 point)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let points = 0; \r",
+									"\r",
+									"pm.test(\"404 status code\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"    points += 0.5;\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"404 error message\", function () {\r",
+									"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"No review with this review_id exists\");\r",
+									"     points += 0.25;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"The response content type is application.json\", function(){\r",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');\r",
+									"    points += 0.25;\r",
+									"});\r",
+									"\r",
+									"console.log('******* Review Test 8 points = ' + points);\r",
+									"\r",
+									"let points_current = pm.environment.get(\"points_review_crud\") + points\r",
+									"\r",
+									"console.log('******* Review CRUD current points = ' + points_current);\r",
+									"\r",
+									"pm.environment.set(\"points_review_crud\", points_current);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{app_url}}/reviews/{{invalid_review_id}}",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"reviews",
+								"{{invalid_review_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "9. get second review 200 (1 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let points = 0; \r",
+									"\r",
+									"pm.test(\"200 status code\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    points += 0.5;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"The response content type is application.json\", function(){\r",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');\r",
+									"    points += 0.5;\r",
+									"});\r",
+									"\r",
+									"console.log('******* Review Test 9 points = ' + points);\r",
+									"\r",
+									"let points_current = pm.environment.get(\"points_review_crud\") + points\r",
+									"\r",
+									"console.log('******* Review CRUD current points = ' + points_current);\r",
+									"\r",
+									"pm.environment.set(\"points_review_crud\", points_current);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{app_url}}/reviews/{{reivew_id_2}}",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"reviews",
+								"{{reivew_id_2}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "10. edit review (1 point)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let points = 0; ",
+									"",
+									"pm.test(\"200 status code\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    points += 0.25;",
+									"});",
+									"",
+									"pm.test(\"content is valid\", function () {",
+									"    pm.expect(pm.response.json()[\"user_id\"]).to.eq(",
+									"        parseInt(pm.environment.get(\"user_id_1\")));",
+									"    pm.expect(pm.response.json()[\"business_id\"]).to.eq(",
+									"        pm.environment.get(\"business_id_2\"));",
+									"    pm.expect(pm.response.json()[\"stars\"]).to.eq(5);",
+									"    pm.expect(pm.response.json()[\"review_text\"]).to.eq(\"Queso is the best.\");",
+									"    points += 0.5;",
+									"});",
+									"",
+									"pm.test(\"The response content type is application.json\", function(){",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');",
+									"    points += 0.25;",
+									"});",
+									"",
+									"console.log('******* Review Test 10 points = ' + points);",
+									"",
+									"let points_current = pm.environment.get(\"points_review_crud\") + points",
+									"",
+									"console.log('******* Review CRUD current points = ' + points_current);",
+									"",
+									"pm.environment.set(\"points_review_crud\", points_current);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"stars\": 5,\r\n  \"review_text\": \"Queso is the best.\"\r\n}"
+						},
+						"url": {
+							"raw": "{{app_url}}/reviews/{{reivew_id_1}}",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"reviews",
+								"{{reivew_id_1}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "11. get review after update 200 (1.5 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let points = 0; ",
+									"",
+									"pm.test(\"200 status code\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    points += 0.25;",
+									"});",
+									"",
+									"pm.test(\"content is valid\", function () {",
+									"    pm.expect(pm.response.json()[\"user_id\"]).to.eq(",
+									"        parseInt(pm.environment.get(\"user_id_1\")));",
+									"    pm.expect(pm.response.json()[\"business_id\"]).to.eq(",
+									"        pm.environment.get(\"business_id_2\"));",
+									"    pm.expect(pm.response.json()[\"stars\"]).to.eq(5);",
+									"    pm.expect(pm.response.json()[\"review_text\"]).to.eq(\"Queso is the best.\");",
+									"    points += 1;",
+									"});",
+									"",
+									"pm.test(\"The response content type is application.json\", function(){",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');",
+									"    points += 0.25;",
+									"});",
+									"",
+									"console.log('******* Review Test 11 points = ' + points);",
+									"",
+									"let points_current = pm.environment.get(\"points_review_crud\") + points",
+									"",
+									"console.log('******* Review CRUD current points = ' + points_current);",
+									"",
+									"pm.environment.set(\"points_review_crud\", points_current);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{app_url}}/reviews/{{reivew_id_1}}",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"reviews",
+								"{{reivew_id_1}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "12. edit review with missing attribute 400 (1 point)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let points = 0; ",
+									"",
+									"pm.test(\"400 status code\", function () {",
+									"    pm.response.to.have.status(400);",
+									"    points += 0.5;",
+									"});",
+									"",
+									"pm.test(\"400 error message\", function () {",
+									"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"The request body is missing at least one of the required attributes\");",
+									"     points += 0.25;",
+									"});",
+									"",
+									"pm.test(\"The response content type is application.json\", function(){",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');",
+									"    points += 0.25;",
+									"});",
+									"",
+									"console.log('******* Review Test 12 points = ' + points);",
+									"",
+									"let points_current = pm.environment.get(\"points_review_crud\") + points",
+									"",
+									"console.log('******* Review CRUD current points = ' + points_current);",
+									"",
+									"pm.environment.set(\"points_review_crud\", points_current);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"review_text\": \"Queso is the best.\"\r\n}"
+						},
+						"url": {
+							"raw": "{{app_url}}/reviews/{{reivew_id_1}}",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"reviews",
+								"{{reivew_id_1}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "13. edit review with invalid id 404 (1 point)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let points = 0; ",
+									"",
+									"pm.test(\"404 not found\", function () {",
+									"    pm.response.to.have.status(404);",
+									"    points += 0.5;",
+									"});",
+									"",
+									"",
+									"pm.test(\"404 error message\", function () {",
+									"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"No review with this review_id exists\");",
+									"     points += 0.25;",
+									"});",
+									"",
+									"pm.test(\"The response content type is application.json\", function(){",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');",
+									"    points += 0.25;",
+									"});",
+									"",
+									"",
+									"console.log('******* Review Test 13 points = ' + points);",
+									"",
+									"let points_current = pm.environment.get(\"points_review_crud\") + points",
+									"",
+									"console.log('******* Review CRUD current points = ' + points_current);",
+									"",
+									"pm.environment.set(\"points_review_crud\", points_current);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"stars\": 5,\r\n  \"review_text\": \"Queso is the best.\"\r\n}\r\n"
+						},
+						"url": {
+							"raw": "{{app_url}}/reviews/{{invalid_review_id}}",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"reviews",
+								"{{invalid_review_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "14. edit review stars only (1.5 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let points = 0; ",
+									"",
+									"pm.test(\"200 status code\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    points += 0.5;",
+									"});",
+									"",
+									"pm.test(\"content is valid\", function () {",
+									"    pm.expect(pm.response.json()[\"user_id\"]).to.eq(",
+									"        parseInt(pm.environment.get(\"user_id_1\")));",
+									"    pm.expect(pm.response.json()[\"business_id\"]).to.eq(",
+									"        pm.environment.get(\"business_id_2\"));",
+									"    pm.expect(pm.response.json()[\"stars\"]).to.eq(4);",
+									"    pm.expect(pm.response.json()[\"review_text\"]).to.eq(\"Queso is the best.\");",
+									"    points += 0.5;",
+									"});",
+									"",
+									"pm.test(\"The response content type is application.json\", function(){",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');",
+									"    points += 0.5;",
+									"});",
+									"",
+									"console.log('******* Review Test 14 points = ' + points);",
+									"",
+									"let points_current = pm.environment.get(\"points_review_crud\") + points",
+									"",
+									"console.log('******* Review CRUD current points = ' + points_current);",
+									"",
+									"pm.environment.set(\"points_review_crud\", points_current);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"stars\": 4\r\n}"
+						},
+						"url": {
+							"raw": "{{app_url}}/reviews/{{reivew_id_1}}",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"reviews",
+								"{{reivew_id_1}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "15. delete review 204 (2 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let points = 0; ",
+									"",
+									"pm.test(\"204 no content\", function () {",
+									"    pm.response.to.have.status(204);",
+									"    points += 2;",
+									"});",
+									"",
+									"console.log('******* Review Test 15 points = ' + points);",
+									"",
+									"let points_current = pm.environment.get(\"points_review_crud\") + points",
+									"",
+									"console.log('******* Review CRUD current points = ' + points_current);",
+									"",
+									"pm.environment.set(\"points_review_crud\", points_current);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{app_url}}/reviews/{{reivew_id_1}}",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"reviews",
+								"{{reivew_id_1}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "16. delete review just deleted 404 (1 point)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let points = 0; ",
+									"",
+									"pm.test(\"404 not found\", function () {",
+									"    pm.response.to.have.status(404);",
+									"    points += 0.5;",
+									"});",
+									"",
+									"pm.test(\"404 error message\", function () {",
+									"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"No review with this review_id exists\");",
+									"     points += 0.5;",
+									"});",
+									"",
+									"",
+									"console.log('******* Review Test 16 points = ' + points);",
+									"",
+									"let points_current = pm.environment.get(\"points_review_crud\") + points",
+									"",
+									"console.log('******* Review CRUD current points = ' + points_current);",
+									"",
+									"pm.environment.set(\"points_review_crud\", points_current);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{app_url}}/reviews/{{reivew_id_1}}",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"reviews",
+								"{{reivew_id_1}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "17. delete business 204 (0 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"204 no content\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{app_url}}/businesses/{{business_id_2}}",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"businesses",
+								"{{business_id_2}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "18. get second review business deleted 404 (2 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let points = 0; \r",
+									"\r",
+									"pm.test(\"404 status code\", function () {\r",
+									"    pm.response.to.have.status(404);\r",
+									"    points += 1;\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"404 error message\", function () {\r",
+									"     pm.expect(pm.response.json()[\"Error\"]).to.eq(\"No review with this review_id exists\");\r",
+									"     points += 0.5;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"The response content type is application.json\", function(){\r",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');\r",
+									"    points += 0.5;\r",
+									"});\r",
+									"\r",
+									"console.log('******* Review Test 18 points = ' + points);\r",
+									"\r",
+									"let points_current = pm.environment.get(\"points_review_crud\") + points\r",
+									"\r",
+									"console.log('******* Review CRUD total points = ' + points_current);\r",
+									"\r",
+									"pm.environment.set(\"points_review_crud\", points_current);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{app_url}}/reviews/{{reivew_id_2}}",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"reviews",
+								"{{reivew_id_2}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "List all reviews for user (6 points)",
+			"item": [
+				{
+					"name": "1. add business 201 (0 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"business_id_1\", pm.response.json()[\"id\"]);",
+									"",
+									"pm.test(\"201 status code\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"",
+									"pm.test(\"content is valid\", function () {",
+									"    pm.expect(pm.response.json()[\"owner_id\"]).to.eq(",
+									"        parseInt(pm.environment.get(\"owner_id_1\")));",
+									"    pm.expect(pm.response.json()[\"name\"]).to.eq(\"Mandola's\");",
+									"    pm.expect(pm.response.json()[\"street_address\"]).to.eq(\"4900 N Lamar Blvd\");",
+									"    pm.expect(pm.response.json()[\"city\"]).to.eq(\"Austin\");",
+									"    pm.expect(pm.response.json()[\"state\"]).to.eq(\"TX\");",
+									"    pm.expect(pm.response.json()[\"zip_code\"]).to.eq(78751);",
+									"});",
+									"",
+									"pm.test(\"The response content type is application.json\", function(){",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"owner_id\": {{owner_id_1}},\r\n  \"name\": \"Mandola's\",\r\n  \"street_address\": \"4900 N Lamar Blvd\",\r\n  \"city\": \"Austin\",\r\n  \"state\": \"TX\",\r\n  \"zip_code\": 78751\r\n}"
+						},
+						"url": {
+							"raw": "{{app_url}}/businesses",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"businesses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "2. add second business 201 (0 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"business_id_2\", pm.response.json()[\"id\"]);",
+									"",
+									"pm.test(\"201 status code\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"",
+									"pm.test(\"content is valid\", function () {",
+									"    pm.expect(pm.response.json()[\"owner_id\"]).to.eq(",
+									"        parseInt(pm.environment.get(\"owner_id_1\")));",
+									"    pm.expect(pm.response.json()[\"name\"]).to.eq(\"Mandola's\");",
+									"    pm.expect(pm.response.json()[\"street_address\"]).to.eq(\"321 South Mopac\");",
+									"    pm.expect(pm.response.json()[\"city\"]).to.eq(\"Austin\");",
+									"    pm.expect(pm.response.json()[\"state\"]).to.eq(\"TX\");",
+									"    pm.expect(pm.response.json()[\"zip_code\"]).to.eq(78751);",
+									"});",
+									"",
+									"pm.test(\"The response content type is application.json\", function(){",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"owner_id\": {{owner_id_1}},\r\n  \"name\": \"Mandola's\",\r\n  \"street_address\": \"321 South Mopac\",\r\n  \"city\": \"Austin\",\r\n  \"state\": \"TX\",\r\n  \"zip_code\": 78751\r\n}"
+						},
+						"url": {
+							"raw": "{{app_url}}/businesses",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"businesses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "3. add review business 1 user 1 (0 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"reivew_id_1\", pm.response.json()[\"id\"]);",
+									"",
+									"pm.test(\"201 status code\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"",
+									"pm.test(\"content is valid\", function () {",
+									"    pm.expect(pm.response.json()[\"user_id\"]).to.eq(",
+									"        parseInt(pm.environment.get(\"user_id_1\")));",
+									"    pm.expect(pm.response.json()[\"business_id\"]).to.eq(",
+									"        pm.environment.get(\"business_id_1\"));",
+									"    pm.expect(pm.response.json()[\"stars\"]).to.eq(4);",
+									"    pm.expect(pm.response.json()[\"review_text\"]).to.eq(\"Excellent tacos!\");",
+									"});",
+									"",
+									"pm.test(\"The response content type is application.json\", function(){",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user_id\": {{user_id_1}},\r\n  \"business_id\": {{business_id_1}},\r\n  \"stars\": 4,\r\n  \"review_text\": \"Excellent tacos!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{app_url}}/reviews",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4. add review business 2 user 1 (0 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"reivew_id_2\", pm.response.json()[\"id\"]);",
+									"",
+									"pm.test(\"201 status code\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"",
+									"pm.test(\"content is valid\", function () {",
+									"    pm.expect(pm.response.json()[\"user_id\"]).to.eq(",
+									"        parseInt(pm.environment.get(\"user_id_1\")));",
+									"    pm.expect(pm.response.json()[\"business_id\"]).to.eq(",
+									"        pm.environment.get(\"business_id_2\"));",
+									"    pm.expect(pm.response.json()[\"stars\"]).to.eq(4);",
+									"    pm.expect(pm.response.json()[\"review_text\"]).to.eq(\"Excellent queso!\");",
+									"});",
+									"",
+									"pm.test(\"The response content type is application.json\", function(){",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user_id\": {{user_id_1}},\r\n  \"business_id\": {{business_id_2}},\r\n  \"stars\": 4,\r\n  \"review_text\": \"Excellent queso!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{app_url}}/reviews",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5. add review business 2 user 2 (0 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"reivew_id_3\", pm.response.json()[\"id\"]);",
+									"",
+									"pm.test(\"201 status code\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"",
+									"pm.test(\"content is valid\", function () {",
+									"    pm.expect(pm.response.json()[\"user_id\"]).to.eq(",
+									"        parseInt(pm.environment.get(\"user_id_2\")));",
+									"    pm.expect(pm.response.json()[\"business_id\"]).to.eq(",
+									"        pm.environment.get(\"business_id_2\"));",
+									"    pm.expect(pm.response.json()[\"stars\"]).to.eq(4);",
+									"    pm.expect(pm.response.json()[\"review_text\"]).to.eq(\"Excellent queso!\");",
+									"});",
+									"",
+									"pm.test(\"The response content type is application.json\", function(){",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user_id\": {{user_id_2}},\r\n  \"business_id\": {{business_id_2}},\r\n  \"stars\": 4,\r\n  \"review_text\": \"Excellent queso!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{app_url}}/reviews",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6. get reviews for user 1 (6 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let points = 0; \r",
+									"\r",
+									"pm.test(\"200 status code\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    points += 0.5;\r",
+									"}); \r",
+									"\r",
+									"pm.test(\"The response content type is application.json\", function(){\r",
+									"    pm.expect(pm.response.contentInfo().contentType).to.eq('application/json');\r",
+									"    points += 0.5;\r",
+									"});\r",
+									"\r",
+									"const reviews = pm.response.json().length;\r",
+									"const reviews_for_owner = pm.response.json().filter((b) => b.user_id === parseInt(pm.environment.get(\"user_id_1\"))).length;\r",
+									"\r",
+									"pm.test(\"All reviews are for user_id_1\", function() {\r",
+									"    pm.expect(reviews).to.eql(reviews_for_owner);\r",
+									"    points += 2.5;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"At least 2 reviews for user_id_1 exist\", function(){\r",
+									"   pm.expect(pm.response.json().filter((b) => b.user_id === parseInt(pm.environment.get(\"user_id_1\"))).length).to.be.at.least(2);\r",
+									"   points += 2.5;\r",
+									"});\r",
+									"\r",
+									"console.log('******* List all reviews for user total points = ' + points);\r",
+									"\r",
+									"pm.environment.set(\"points_list_reviews\", points);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{app_url}}/users/{{user_id_1}}/reviews",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"users",
+								"{{user_id_1}}",
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7. delete business 204 (0 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"204 no content\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{app_url}}/businesses/{{business_id_1}}",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"businesses",
+								"{{business_id_1}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "8. delete second business 204 (0 points)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"204 no content\", function () {",
+									"    pm.response.to.have.status(204);",
+									"});",
+									"",
+									"",
+									"",
+									"console.log('******* Businesses CRUD points = ' + pm.environment.get(\"points_business_crud\"));",
+									"console.log('******* Review CRUD points = ' + pm.environment.get(\"points_review_crud\"));",
+									"console.log('******* List businesses for owner points = ' + pm.environment.get(\"points_list_businesses\"));",
+									"console.log('******* List all reviews for user points = ' + pm.environment.get(\"points_list_reviews\"));",
+									"",
+									"",
+									"let total_points = pm.environment.get(\"points_business_crud\")",
+									"            + pm.environment.get(\"points_review_crud\")",
+									"            + pm.environment.get(\"points_list_businesses\")",
+									"            + pm.environment.get(\"points_list_reviews\");",
+									"",
+									"",
+									"console.log('******* Total points for the assignment = ' + total_points);",
+									"",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{app_url}}/businesses/{{business_id_2}}",
+							"host": [
+								"{{app_url}}"
+							],
+							"path": [
+								"businesses",
+								"{{business_id_2}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
