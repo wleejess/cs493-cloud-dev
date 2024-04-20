@@ -104,9 +104,16 @@ def delete_business(id):
     business = client.get(key=business_key)
     if business is None:
         return ERROR_NO_BUSINESS, 404
-    else:
-        client.delete(business_key)
-        return ('', 204)
+
+    review_query = client.query(kind=REVIEWS)
+    review_query.add_filter('business_id', '=', id)
+    reviews = review_query.fetch()
+    
+    for review in reviews:
+        client.delete(review.key)
+    
+    client.delete(business_key)
+    return ('', 204)
 
 @app.route('/owners/<owner_id>/' + BUSINESSES, methods=['GET'])
 def get_owner_business(owner_id):
@@ -181,12 +188,6 @@ def get_review(id):
     review = client.get(key=review_key)
     
     if review is None:
-        return ERROR_NO_REVIEW, 404
-
-    business_key = client.key(BUSINESSES, review['business_id'])
-    business = client.get(key=business_key)
-    
-    if business is None:
         return ERROR_NO_REVIEW, 404
 
     review['id'] = review.key.id
