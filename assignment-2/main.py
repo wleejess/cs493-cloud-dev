@@ -8,6 +8,10 @@ client = datastore.Client()
 
 BUSINESSES = 'businesses'
 REVIEWS = 'reviews'
+ERROR_MISSING_ATTRIBUTE = {"Error": "The request body is missing at least one of the required attributes"}
+ERROR_NO_REVIEW = {"Error": "No review with this review_id exists"}
+ERROR_NO_BUSINESS = {"Error": "No business with this business_id exists"}
+ERROR_DUPE = {"Error": "You have already submitted a review for this business. You can update your previous review, or delete it and submit a new review"}
 
 @app.route('/')
 def index():
@@ -17,7 +21,7 @@ def index():
 def home():
     return render_template("/index.html")
 
-@app.route('/businesses', methods=['POST', 'GET'])
+@app.route('/' + BUSINESSES, methods=['POST', 'GET'])
 def businesses():
     if request.method == 'POST':
         content = request.get_json()
@@ -37,7 +41,7 @@ def businesses():
             new_business['id'] = new_business.key.id
             return (new_business, 201)
         else:
-            return {"Error": "The request body is missing at least one of the required attributes"}, 400
+            return ERROR_MISSING_ATTRIBUTE, 400
     
     if request.method == 'GET':        
         query = client.query(kind=BUSINESSES)
@@ -61,23 +65,23 @@ def check_attributes(content):
         return False
     return True
 
-@app.route('/businesses/<int:id>', methods=['GET'])
+@app.route('/' + BUSINESSES + '/<int:id>', methods=['GET'])
 def get_business(id):
     business_key = client.key(BUSINESSES, id)
     business = client.get(key=business_key)
     if business is None:
-        return {"Error": "No business with this business_id exists"}, 404
+        return ERROR_NO_BUSINESS, 404
     else:
         business['id'] = business.key.id
         return business
 
-@app.route('/businesses/<int:id>', methods=['PUT'])
+@app.route('/' + BUSINESSES + '/<int:id>', methods=['PUT'])
 def put_business(id):
     content = request.get_json()
     business_key = client.key(BUSINESSES, id)
     business = client.get(key=business_key)
     if business is None:
-        return {'Error': 'No business with this business_id exists'}, 404
+        return ERROR_NO_BUSINESS, 404
     else:
         if check_attributes(content):
             business.update({
@@ -92,19 +96,19 @@ def put_business(id):
             business['id'] = business.key.id
             return business
         else:
-            return {"Error": "The request body is missing at least one of the required attributes"}, 400
+            return ERROR_MISSING_ATTRIBUTE, 400
     
-@app.route('/businesses/<int:id>', methods=['DELETE'])
+@app.route('/' + BUSINESSES + '/<int:id>', methods=['DELETE'])
 def delete_business(id):
     business_key = client.key(BUSINESSES, id)
     business = client.get(key=business_key)
     if business is None:
-        return {"Error": "No business with this business_id exists"}, 404
+        return ERROR_NO_BUSINESS, 404
     else:
         client.delete(business_key)
         return ('', 204)
 
-@app.route('/owners/<owner_id>/businesses', methods=['GET'])
+@app.route('/owners/<owner_id>/' + BUSINESSES, methods=['GET'])
 def get_owner_business(owner_id):
     query = client.query(kind=BUSINESSES)
     query_params = request.args
@@ -117,7 +121,7 @@ def get_owner_business(owner_id):
     print(owner_id, results)
     return results
 
-@app.route('/reviews', methods=['POST'])
+@app.route('/' + REVIEWS, methods=['POST'])
 def reviews():
     if request.method == 'POST':
         content = request.get_json()
@@ -129,14 +133,14 @@ def reviews():
             business_key = client.key(BUSINESSES, business_id)
             business = client.get(key=business_key)
             if business is None:
-                return {"Error": "No business with this business_id exists"}, 404
+                return ERROR_NO_BUSINESS, 404
 
             existing_review_query = client.query(kind=REVIEWS)
             existing_review_query.add_filter('user_id', '=', user_id)
             existing_review_query.add_filter('business_id', '=', business_id)
             existing_reviews = list(existing_review_query.fetch())
             if existing_reviews:
-                return {"Error": "You have already submitted a review for this business. You can update your previous review, or delete it and submit a new review"}, 409
+                return ERROR_DUPE, 409
 
             new_key = client.key(REVIEWS)
             new_review = client.entity(key=new_key)
@@ -158,7 +162,7 @@ def reviews():
             new_review['id'] = new_review.key.id
             return (new_review, 201)
         else:
-            return {"Error": "The request body is missing at least one of the required attributes"}, 400
+            return ERROR_MISSING_ATTRIBUTE, 400
 
 def check_params(content):
     if 'user_id' not in content or content['user_id'] is None:
@@ -171,30 +175,30 @@ def check_params(content):
         return "No Review"
     return "Yes Review"
 
-@app.route('/reviews/<int:id>', methods=['GET'])
+@app.route('/' + REVIEWS + '/<int:id>', methods=['GET'])
 def get_review(id):
     review_key = client.key(REVIEWS, id)
     review = client.get(key=review_key)
     
     if review is None:
-        return {"Error": "No review with this review_id exists"}, 404
+        return ERROR_NO_REVIEW, 404
 
     business_key = client.key(BUSINESSES, review['business_id'])
     business = client.get(key=business_key)
     
     if business is None:
-        return {"Error": "No review with this review_id exists"}, 404
+        return ERROR_NO_REVIEW, 404
 
     review['id'] = review.key.id
     return review
 
-@app.route('/reviews/<int:id>', methods=['PUT'])
+@app.route('/' + REVIEWS + '/<int:id>', methods=['PUT'])
 def put_review(id):
     content = request.get_json()
     review_key = client.key(REVIEWS, id)
     review = client.get(key=review_key)
     if review is None:
-        return {"Error": "No review with this review_id exists"}, 404
+        return ERROR_NO_REVIEW, 404
     else:
         if ('stars' in content) and ('review_text' in content):
             review.update({
@@ -212,20 +216,19 @@ def put_review(id):
             review['id'] = review.key.id
             return review
         else:
-            return {"Error": "The request body is missing at least one of the required attributes"}, 400
+            return ERROR_MISSING_ATTRIBUTE, 400
 
-  
-@app.route('/reviews/<int:id>', methods=['DELETE'])
+@app.route('/' + REVIEWS + '/<int:id>', methods=['DELETE'])
 def delete_review(id):
     review_key = client.key(REVIEWS, id)
     review = client.get(key=review_key)
     if review is None:
-        return {"Error": "No review with this review_id exists"}, 404
+        return ERROR_NO_REVIEW, 404
     else:
         client.delete(review_key)
         return ('', 204)
 
-@app.route('/users/<user_id>/reviews', methods=['GET'])
+@app.route('/users/<user_id>/' + REVIEWS, methods=['GET'])
 def get_user_reviews(user_id):
     query = client.query(kind=REVIEWS)
     query_params = request.args
