@@ -1,0 +1,116 @@
+{
+	"info": {
+		"_postman_id": "48812639-01a8-452c-a01a-9d0964dab9b3",
+		"name": "m3-lodgings",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9037348"
+	},
+	"item": [
+		{
+			"name": "create lodging",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\t\r\n   \"name\": \"The Grand Budapest Hotel\",\r\n   \"description\": \"Very colorful!\",\r\n   \"price\": 325\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/lodgings",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"lodgings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get lodgings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/lodgings",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"lodgings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get a lodging",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/lodgings/3456",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"lodgings",
+						"3456"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edit lodging",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\t\r\n   \"name\": \"The Grand Budapest Hotel\",\r\n   \"description\": \"Very colorful!\",\r\n   \"price\": 325\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{app_url}}/lodgings/1234",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"lodgings",
+						"1234"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete lodging",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{app_url}}/lodgings/1234",
+					"host": [
+						"{{app_url}}"
+					],
+					"path": [
+						"lodgings",
+						"1234"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
