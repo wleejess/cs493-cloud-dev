@@ -1,0 +1,724 @@
+newman
+
+assignment3
+
+❏ Businesses CRUD (24 points)
+↳ 1. add business 201 (2 points)
+  POST http://127.0.0.1:8080/businesses [201 CREATED, 375B, 347ms]
+  ✓  201 status code
+  ✓  content is valid
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Businesses Test 1 points = 2'
+  │ '******* Businesses CRUD current points = 2'
+  └
+
+↳ 2. add business with missing attributes 400 (2 points)
+  POST http://127.0.0.1:8080/businesses [400 BAD REQUEST, 259B, 4ms]
+  ✓  400 status code
+  ✓  400 error message
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Businesses Test 2 points = 2'
+  │ '******* Businesses CRUD current points = 4'
+  └
+
+↳ 3. add second business 201 (2 points)
+  POST http://127.0.0.1:8080/businesses [201 CREATED, 373B, 279ms]
+  ✓  201 status code
+  ✓  content is valid
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Businesses Test 3 points = 2'
+  │ '******* Businesses CRUD current points = 6'
+  └
+
+↳ 4. get a business 200 (4 points)
+  GET http://127.0.0.1:8080/businesses/4 [200 OK, 370B, 114ms]
+  ✓  200 status code
+  ✓  content is valid
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Businesses Test 4 points = 4'
+  │ '******* Businesses CRUD current points = 10'
+  └
+
+↳ 5. get business with invalid id 404 (2 points)
+  GET http://127.0.0.1:8080/businesses/0 [404 NOT FOUND, 230B, 115ms]
+  ✓  404 not found
+  ✓  404 error message
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Businesses Test 5 points = 2'
+  │ '******* Businesses CRUD current points = 12'
+  └
+
+↳ 6. edit business 200 (2 points)
+  PUT http://127.0.0.1:8080/businesses/4 [200 OK, 378B, 286ms]
+  ✓  200 status code
+  ✓  content is valid
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Businesses Test 7 points = 2'
+  │ '******* Businesses CRUD current points = 14'
+  └
+
+↳ 7. get business after update 200 (2 points)
+  GET http://127.0.0.1:8080/businesses/4 [200 OK, 378B, 107ms]
+  ✓  200 status code
+  ✓  content is valid
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Businesses Test 8 points = 2'
+  │ '******* Businesses CRUD current points = 16'
+  └
+
+↳ 8. edit business with missing attributes 400 (1 point)
+  PUT http://127.0.0.1:8080/businesses/4 [400 BAD REQUEST, 259B, 112ms]
+  ✓  400 status code
+  ✓  400 error message
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Businesses Test 9 points = 1'
+  │ '******* Businesses CRUD current points = 17'
+  └
+
+↳ 9. edit business with invalid id 404 (1 point)
+  PUT http://127.0.0.1:8080/businesses/0 [404 NOT FOUND, 230B, 114ms]
+  ✓  404 not found
+  ✓  404 error message
+  ✓  The response content type is application.json
+  ┌
+  │ '******* Businesses Test 10 points = 1'
+  │ '******* Businesses CRUD current points = 18'
+  └
+
+↳ 10. delete business 204 (2 points)
+  DELETE http://127.0.0.1:8080/businesses/4 [204 NO CONTENT, 161B, 245ms]
+  ✓  204 no content
+  ┌
+  │ '******* Businesses Test 11 points = 2'
+  │ '******* Businesses CRUD current points = 20'
+  └
+
+↳ 11. delete business just deleted 404 (2 points)
+  DELETE http://127.0.0.1:8080/businesses/4 [404 NOT FOUND, 230B, 171ms]
+  ✓  404 not found
+  ✓  404 error message
+  ┌
+  │ '******* Businesses Test 12 points = 2'
+  │ '******* Businesses CRUD current points = 22'
+  └
+
+↳ 12. delete second business 204 (2 points)
+  DELETE http://127.0.0.1:8080/businesses/5 [204 NO CONTENT, 161B, 267ms]
+  ✓  204 no content
+  ┌
+  │ '******* Businesses Test 13 points = 2'
+  │ '******* Businesses CRUD total points = 24'
+  └
+
+❏ List all businesses  with pagination (9 points)
+↳ 1. add business for owner 1 201 (0 points)
+  POST http://127.0.0.1:8080/businesses [201 CREATED, 375B, 229ms]
+  ✓  201 status code
+
+↳ 2. add 2nd business for owner 1 201 (0 points)
+  POST http://127.0.0.1:8080/businesses [201 CREATED, 373B, 226ms]
+  ✓  201 status code
+
+↳ 3. add 3rd business for owner 1 201 (0 points)
+  POST http://127.0.0.1:8080/businesses [201 CREATED, 373B, 221ms]
+  ✓  201 status code
+
+↳ 4. add 4th business for owner 1 201 (0 points)
+  POST http://127.0.0.1:8080/businesses [201 CREATED, 373B, 223ms]
+  ✓  201 status code
+
+↳ 5. add 5th business for owner 1 201 (0 points)
+  POST http://127.0.0.1:8080/businesses [201 CREATED, 375B, 236ms]
+  ✓  201 status code
+
+↳ 6. add business for owner 2 (0 points)
+  POST http://127.0.0.1:8080/businesses [201 CREATED, 375B, 225ms]
+  ✓  201 status code
+
+↳ 7. add 2nd business for owner 2 (0 points)
+  POST http://127.0.0.1:8080/businesses [201 CREATED, 375B, 227ms]
+  ✓  201 status code
+
+↳ 8. get 1st page of businesses (4 points)
+  GET http://127.0.0.1:8080/businesses [200 OK, 988B, 114ms]
+  ✓  200 status code
+  ✓  The response content type is application.json
+  ✓  Exaclty 3 businesses on the page
+  ✓  Every business has all the required properties
+  ✓  The next link is correct
+  ┌
+  │ '******* List all businesses. Test 8 points = 4'
+  └
+
+↳ 9. get 2nd page of businesses (4 points)
+  GET http://127.0.0.1:8080/businesses?offset=3&limit=3 [200 OK, 990B, 118ms]
+  ✓  200 status code
+  ✓  The response content type is application.json
+  ✓  Exaclty 3 businesses on the page
+  ✓  Every business has all the required properties
+  ✓  The next link is correct
+  ┌
+  │ '******* List all businesses. Test 9 points = 4'
+  │ '******* List all businesses current points = 8'
+  └
+
+↳ 10. get 3rd page of businesses (1 point)
+  GET http://127.0.0.1:8080/businesses?offset=6&limit=3 [200 OK, 451B, 112ms]
+  ✓  200 status code
+  ✓  The response content type is application.json
+  ✓  At least one business on the page
+  ✓  Every business has all the required properties
+  ┌
+  │ '******* List all businesses. Test 10 points = 1'
+  │ '******* List all businesses. Total points = 9'
+  └
+
+↳ 11. delete all business 204 (0 points)
+  DELETE http://127.0.0.1:8080/businesses/6 [204 NO CONTENT, 161B, 179ms]
+  ✓  204 no content
+  DELETE http://127.0.0.1:8080/businesses/7   DELETE http://127.0.0.1:8080/businesses/8   DELETE http://127.0.0.1:8080/businesses/9   DELETE http://127.0.0.1:8080/businesses/10   DELETE http://127.0.0.1:8080/businesses/11   DELETE http://127.0.0.1:8080/businesses/12 [204 NO CONTENT, 161B, 183ms]
+[204 NO CONTENT, 161B, 565ms]
+[204 NO CONTENT, 161B, 572ms]
+[204 NO CONTENT, 161B, 577ms]
+[204 NO CONTENT, 161B, 578ms]
+[204 NO CONTENT, 161B, 583ms]
+
+❏ List businesses for owner (6 points)
+↳ 1. add business for owner 1 201 (0 points)
+  POST http://127.0.0.1:8080/businesses [201 CREATED, 377B, 228ms]
+  ✓  201 status code
+
+↳ 2. add 2nd business for owner 1 201 (0 points)
+  POST http://127.0.0.1:8080/businesses [201 CREATED, 375B, 227ms]
+  ✓  201 status code
+
+↳ 3. add business for owner 2 (0 points)
+  POST http://127.0.0.1:8080/businesses [201 CREATED, 375B, 226ms]
+  ✓  201 status code
+
+↳ 5. get all businesses for owner 1 (3 points)
+  GET http://127.0.0.1:8080/owners/6789/businesses [200 OK, 625B, 111ms]
+  ✓  200 status code
+  ✓  At least 2 businesses for owner 1
+  ✓  Owner ID is correct  for all businesses
+  ✓  Every business has all the required properties
+  ✓  The response content type is application.json
+  ┌
+  │ '******* List businesses for owner, Test 5 points = 3'
+  └
+
+↳ 6. get all businesses for owner 2 (3 points)
+  GET http://127.0.0.1:8080/owners/7890/businesses [200 OK, 396B, 116ms]
+  ✓  200 status code
+  ✓  At least 1 business for owner 2
+  ✓  Owner ID is correct  for all businesses
+  ✓  Every business has all the required properties
+  ✓  The response content type is application.json
+  ┌
+  │ '******* List businesses for owner, Test 6 points = 3'
+  │ '******* List businesses for owner total points = 6'
+  └
+
+↳ 7. delete business 204 (0 points)
+  DELETE http://127.0.0.1:8080/businesses/13 [204 NO CONTENT, 161B, 166ms]
+  ✓  204 no content
+
+↳ 8. delete 2nd business 204 (0 points)
+  DELETE http://127.0.0.1:8080/businesses/14 [204 NO CONTENT, 161B, 176ms]
+  ✓  204 no content
+
+↳ 9. delete 3rd business 204 (0 points)
+  DELETE http://127.0.0.1:8080/businesses/15 [204 NO CONTENT, 161B, 169ms]
+  ✓  204 no content
+
+❏ Reviews CRUD (24 points)
+↳ 1. add business  201 (0 points)
+  POST http://127.0.0.1:8080/businesses [201 CREATED, 379B, 229ms]
+  ✓  201 status code
+
+↳ 2. add review 201 (2 points)
+  POST http://127.0.0.1:8080/reviews [404 NOT FOUND, 388B, 4ms]
+  1⠄ JSONError in test-script
+
+↳ 3. add review again 409 (1.5 points)
+  POST http://127.0.0.1:8080/reviews [404 NOT FOUND, 388B, 2ms]
+  2. 409 status code
+  3. 409 error message
+  4. The response content type is application.json
+  ┌
+  │ '******* Review Test 3 points = 0'
+  │ '******* Review CRUD current points = 0'
+  └
+
+↳ 4. add review 400 (1 point)
+  POST http://127.0.0.1:8080/reviews [404 NOT FOUND, 388B, 2ms]
+  5. 400 status code
+  6. 400 error message
+  7. The response content type is application.json
+  ┌
+  │ '******* Review Test 4 points = 0'
+  │ '******* Review CRUD current points = 0'
+  └
+
+↳ 5. add review invalid business 404 (1.5 points)
+  POST http://127.0.0.1:8080/reviews [404 NOT FOUND, 388B, 2ms]
+  ✓  404 status code
+  8. 404 error message
+  9. The response content type is application.json
+  ┌
+  │ '******* Review Test 5 points = 0.5'
+  │ '******* Review CRUD current points = 0.5'
+  └
+
+↳ 6. add review 2 no review_text 201 (2 points)
+  POST http://127.0.0.1:8080/reviews [404 NOT FOUND, 388B, 2ms]
+ 10⠄ JSONError in test-script
+
+↳ 7. get review 200 (3 points)
+  GET http://127.0.0.1:8080/reviews/{{review_id_1}} [404 NOT FOUND, 388B, 2ms]
+ 11. 200 status code
+ 12. content is valid
+ 13. The response content type is application.json
+  ┌
+  │ '******* Review Test 7 points = 0'
+  │ '******* Review CRUD current points = 0.5'
+  └
+
+↳ 8. get review 404 (1 point)
+  GET http://127.0.0.1:8080/reviews/0 [404 NOT FOUND, 388B, 1ms]
+  ✓  404 status code
+ 14. 404 error message
+ 15. The response content type is application.json
+  ┌
+  │ '******* Review Test 8 points = 0.5'
+  │ '******* Review CRUD current points = 1'
+  └
+
+↳ 9. get second review 200 (1 points)
+  GET http://127.0.0.1:8080/reviews/{{review_id_2}} [404 NOT FOUND, 388B, 2ms]
+ 16. 200 status code
+ 17. The response content type is application.json
+  ┌
+  │ '******* Review Test 9 points = 0'
+  │ '******* Review CRUD current points = 1'
+  └
+
+↳ 10. edit review (1 point)
+  PUT http://127.0.0.1:8080/reviews/{{review_id_1}} [404 NOT FOUND, 388B, 2ms]
+ 18. 200 status code
+ 19. content is valid
+ 20. The response content type is application.json
+  ┌
+  │ '******* Review Test 10 points = 0'
+  │ '******* Review CRUD current points = 1'
+  └
+
+↳ 11. get review after update 200 (1.5 points)
+  GET http://127.0.0.1:8080/reviews/{{review_id_1}} [404 NOT FOUND, 388B, 2ms]
+ 21. 200 status code
+ 22. content is valid
+ 23. The response content type is application.json
+  ┌
+  │ '******* Review Test 11 points = 0'
+  │ '******* Review CRUD current points = 1'
+  └
+
+↳ 12. edit review with missing attribute 400 (1 point)
+  PUT http://127.0.0.1:8080/reviews/{{review_id_1}} [404 NOT FOUND, 388B, 2ms]
+ 24. 400 status code
+ 25. 400 error message
+ 26. The response content type is application.json
+  ┌
+  │ '******* Review Test 12 points = 0'
+  │ '******* Review CRUD current points = 1'
+  └
+
+↳ 13. edit review with invalid id 404 (1 point)
+  PUT http://127.0.0.1:8080/reviews/0 [404 NOT FOUND, 388B, 2ms]
+  ✓  404 not found
+ 27. 404 error message
+ 28. The response content type is application.json
+  ┌
+  │ '******* Review Test 13 points = 0.5'
+  │ '******* Review CRUD current points = 1.5'
+  └
+
+↳ 14. edit review stars only (1.5 points)
+  PUT http://127.0.0.1:8080/reviews/{{review_id_1}} [404 NOT FOUND, 388B, 1ms]
+ 29. 200 status code
+ 30. content is valid
+ 31. The response content type is application.json
+  ┌
+  │ '******* Review Test 14 points = 0'
+  │ '******* Review CRUD current points = 1.5'
+  └
+
+↳ 15. delete review 204 (2 points)
+  DELETE http://127.0.0.1:8080/reviews/{{review_id_1}} [404 NOT FOUND, 388B, 2ms]
+ 32. 204 no content
+  ┌
+  │ '******* Review Test 15 points = 0'
+  │ '******* Review CRUD current points = 1.5'
+  └
+
+↳ 16. delete review just deleted 404 (1 point)
+  DELETE http://127.0.0.1:8080/reviews/{{review_id_1}} [404 NOT FOUND, 388B, 2ms]
+  ✓  404 not found
+ 33. 404 error message
+  ┌
+  │ '******* Review Test 16 points = 0.5'
+  │ '******* Review CRUD current points = 2'
+  └
+
+↳ 17. delete business 204 (0 points)
+  DELETE http://127.0.0.1:8080/businesses/16 [204 NO CONTENT, 161B, 172ms]
+  ✓  204 no content
+
+↳ 18. get second review business deleted 404 (2 points)
+  GET http://127.0.0.1:8080/reviews/{{review_id_2}} [404 NOT FOUND, 388B, 3ms]
+  ✓  404 status code
+ 34. 404 error message
+ 35. The response content type is application.json
+  ┌
+  │ '******* Review Test 18 points = 1'
+  │ '******* Review CRUD total points = 3'
+  └
+
+❏ List all reviews for user (6 points)
+↳ 1. add business 201 (0 points)
+  POST http://127.0.0.1:8080/businesses [201 CREATED, 377B, 228ms]
+  ✓  201 status code
+
+↳ 2. add second business 201 (0 points)
+  POST http://127.0.0.1:8080/businesses [201 CREATED, 375B, 228ms]
+  ✓  201 status code
+
+↳ 3. add review business 1 user 1 (0 points)
+  POST http://127.0.0.1:8080/reviews [404 NOT FOUND, 388B, 3ms]
+ 36⠄ JSONError in test-script
+
+↳ 4. add review business 2 user 1 (0 points)
+  POST http://127.0.0.1:8080/reviews [404 NOT FOUND, 388B, 2ms]
+ 37⠄ JSONError in test-script
+
+↳ 5. add review business 2 user 2 (0 points)
+  POST http://127.0.0.1:8080/reviews [404 NOT FOUND, 388B, 2ms]
+ 38⠄ JSONError in test-script
+
+↳ 6. get reviews for user 1 (6 points)
+  GET http://127.0.0.1:8080/users/1234/reviews [404 NOT FOUND, 388B, 2ms]
+ 39. 200 status code
+ 40. The response content type is application.json
+ 41. At least 2 reviews for user_id_1 exist
+ 42. All reviews are for user_id_1
+ 43. Every reivew has all the required properties
+  ┌
+  │ '******* List all reviews for user total points = 0'
+  └
+
+↳ 7. delete business 204 (0 points)
+  DELETE http://127.0.0.1:8080/businesses/17 [204 NO CONTENT, 161B, 170ms]
+  ✓  204 no content
+
+↳ 8. delete second business 204 (0 points)
+  DELETE http://127.0.0.1:8080/businesses/18 [204 NO CONTENT, 161B, 171ms]
+  ✓  204 no content
+  ┌
+  │ '******* Businesses CRUD Tests              Score = 24
+  │ /24'
+  │ '******* List All Businesses Tests          Score = 9/
+  │ 9'
+  │ '******* List Businesses for An Owner Tests Score = 6/
+  │ 6'
+  │ '******* Review CRUD Tests                  Score = 3/
+  │ 24'
+  │ '******* List All Reviews for A User Tests  Score = 0/
+  │ 6'
+  │ '******* All Postman Tests                  Score = 42
+  │ /69'
+  └
+
+┌─────────────────────────┬────────────────────┬───────────────────┐
+│                         │           executed │            failed │
+├─────────────────────────┼────────────────────┼───────────────────┤
+│              iterations │                  1 │                 0 │
+├─────────────────────────┼────────────────────┼───────────────────┤
+│                requests │                 63 │                 0 │
+├─────────────────────────┼────────────────────┼───────────────────┤
+│            test-scripts │                114 │                 5 │
+├─────────────────────────┼────────────────────┼───────────────────┤
+│      prerequest-scripts │                 59 │                 0 │
+├─────────────────────────┼────────────────────┼───────────────────┤
+│              assertions │                118 │                38 │
+├─────────────────────────┴────────────────────┴───────────────────┤
+│ total run duration: 8.4s                                         │
+├──────────────────────────────────────────────────────────────────┤
+│ total data received: 10.79kB (approx)                            │
+├──────────────────────────────────────────────────────────────────┤
+│ average response time: 158ms [min: 1ms, max: 583ms, s.d.: 156ms] │
+└──────────────────────────────────────────────────────────────────┘
+
+[31m   # [39m[31m failure        [39m[31m detail                                                                                     [39m
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 01.  JSONError                                                                                                  
+                      Unexpected token '<' at 1:1                                                                
+                      <!doctype html>                                                                            
+                      ^                                                                                          
+                      at test-script                                                                             
+                      inside "Reviews CRUD (24 points) / 2. add review 201 (2 points)"                           
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 02.  AssertionError  409 status code                                                                            
+                      expected response to have status code 409 but got 404                                      
+                      at assertion:0 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 3. add review again 409 (1.5 points)"                   
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 03.  JSONError       409 error message                                                                          
+                      Unexpected token '<' at 1:1                                                                
+                      <!doctype html>                                                                            
+                      ^                                                                                          
+                      at assertion:1 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 3. add review again 409 (1.5 points)"                   
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 04.  AssertionError  The response content type is application.json                                              
+                      expected 'text/html' to equal 'application/json'                                           
+                      at assertion:2 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 3. add review again 409 (1.5 points)"                   
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 05.  AssertionError  400 status code                                                                            
+                      expected response to have status code 400 but got 404                                      
+                      at assertion:0 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 4. add review 400 (1 point)"                            
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 06.  JSONError       400 error message                                                                          
+                      Unexpected token '<' at 1:1                                                                
+                      <!doctype html>                                                                            
+                      ^                                                                                          
+                      at assertion:1 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 4. add review 400 (1 point)"                            
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 07.  AssertionError  The response content type is application.json                                              
+                      expected 'text/html' to equal 'application/json'                                           
+                      at assertion:2 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 4. add review 400 (1 point)"                            
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 08.  JSONError       404 error message                                                                          
+                      Unexpected token '<' at 1:1                                                                
+                      <!doctype html>                                                                            
+                      ^                                                                                          
+                      at assertion:1 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 5. add review invalid business 404 (1.5 points)"        
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 09.  AssertionError  The response content type is application.json                                              
+                      expected 'text/html' to equal 'application/json'                                           
+                      at assertion:2 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 5. add review invalid business 404 (1.5 points)"        
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 10.  JSONError                                                                                                  
+                      Unexpected token '<' at 1:1                                                                
+                      <!doctype html>                                                                            
+                      ^                                                                                          
+                      at test-script                                                                             
+                      inside "Reviews CRUD (24 points) / 6. add review 2 no review_text 201 (2 points)"          
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 11.  AssertionError  200 status code                                                                            
+                      expected response to have status code 200 but got 404                                      
+                      at assertion:0 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 7. get review 200 (3 points)"                           
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 12.  JSONError       content is valid                                                                           
+                      Unexpected token '<' at 1:1                                                                
+                      <!doctype html>                                                                            
+                      ^                                                                                          
+                      at assertion:1 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 7. get review 200 (3 points)"                           
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 13.  AssertionError  The response content type is application.json                                              
+                      expected 'text/html' to equal 'application/json'                                           
+                      at assertion:2 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 7. get review 200 (3 points)"                           
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 14.  JSONError       404 error message                                                                          
+                      Unexpected token '<' at 1:1                                                                
+                      <!doctype html>                                                                            
+                      ^                                                                                          
+                      at assertion:1 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 8. get review 404 (1 point)"                            
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 15.  AssertionError  The response content type is application.json                                              
+                      expected 'text/html' to equal 'application/json'                                           
+                      at assertion:2 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 8. get review 404 (1 point)"                            
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 16.  AssertionError  200 status code                                                                            
+                      expected response to have status code 200 but got 404                                      
+                      at assertion:0 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 9. get second review 200 (1 points)"                    
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 17.  AssertionError  The response content type is application.json                                              
+                      expected 'text/html' to equal 'application/json'                                           
+                      at assertion:1 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 9. get second review 200 (1 points)"                    
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 18.  AssertionError  200 status code                                                                            
+                      expected response to have status code 200 but got 404                                      
+                      at assertion:0 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 10. edit review (1 point)"                              
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 19.  JSONError       content is valid                                                                           
+                      Unexpected token '<' at 1:1                                                                
+                      <!doctype html>                                                                            
+                      ^                                                                                          
+                      at assertion:1 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 10. edit review (1 point)"                              
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 20.  AssertionError  The response content type is application.json                                              
+                      expected 'text/html' to equal 'application/json'                                           
+                      at assertion:2 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 10. edit review (1 point)"                              
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 21.  AssertionError  200 status code                                                                            
+                      expected response to have status code 200 but got 404                                      
+                      at assertion:0 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 11. get review after update 200 (1.5 points)"           
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 22.  JSONError       content is valid                                                                           
+                      Unexpected token '<' at 1:1                                                                
+                      <!doctype html>                                                                            
+                      ^                                                                                          
+                      at assertion:1 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 11. get review after update 200 (1.5 points)"           
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 23.  AssertionError  The response content type is application.json                                              
+                      expected 'text/html' to equal 'application/json'                                           
+                      at assertion:2 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 11. get review after update 200 (1.5 points)"           
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 24.  AssertionError  400 status code                                                                            
+                      expected response to have status code 400 but got 404                                      
+                      at assertion:0 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 12. edit review with missing attribute 400 (1 point)"   
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 25.  JSONError       400 error message                                                                          
+                      Unexpected token '<' at 1:1                                                                
+                      <!doctype html>                                                                            
+                      ^                                                                                          
+                      at assertion:1 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 12. edit review with missing attribute 400 (1 point)"   
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 26.  AssertionError  The response content type is application.json                                              
+                      expected 'text/html' to equal 'application/json'                                           
+                      at assertion:2 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 12. edit review with missing attribute 400 (1 point)"   
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 27.  JSONError       404 error message                                                                          
+                      Unexpected token '<' at 1:1                                                                
+                      <!doctype html>                                                                            
+                      ^                                                                                          
+                      at assertion:1 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 13. edit review with invalid id 404 (1 point)"          
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 28.  AssertionError  The response content type is application.json                                              
+                      expected 'text/html' to equal 'application/json'                                           
+                      at assertion:2 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 13. edit review with invalid id 404 (1 point)"          
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 29.  AssertionError  200 status code                                                                            
+                      expected response to have status code 200 but got 404                                      
+                      at assertion:0 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 14. edit review stars only (1.5 points)"                
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 30.  JSONError       content is valid                                                                           
+                      Unexpected token '<' at 1:1                                                                
+                      <!doctype html>                                                                            
+                      ^                                                                                          
+                      at assertion:1 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 14. edit review stars only (1.5 points)"                
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 31.  AssertionError  The response content type is application.json                                              
+                      expected 'text/html' to equal 'application/json'                                           
+                      at assertion:2 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 14. edit review stars only (1.5 points)"                
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 32.  AssertionError  204 no content                                                                             
+                      expected response to have status code 204 but got 404                                      
+                      at assertion:0 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 15. delete review 204 (2 points)"                       
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 33.  JSONError       404 error message                                                                          
+                      Unexpected token '<' at 1:1                                                                
+                      <!doctype html>                                                                            
+                      ^                                                                                          
+                      at assertion:1 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 16. delete review just deleted 404 (1 point)"           
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 34.  JSONError       404 error message                                                                          
+                      Unexpected token '<' at 1:1                                                                
+                      <!doctype html>                                                                            
+                      ^                                                                                          
+                      at assertion:1 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 18. get second review business deleted 404 (2 points)"  
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 35.  AssertionError  The response content type is application.json                                              
+                      expected 'text/html' to equal 'application/json'                                           
+                      at assertion:2 in test-script                                                              
+                      inside "Reviews CRUD (24 points) / 18. get second review business deleted 404 (2 points)"  
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 36.  JSONError                                                                                                  
+                      Unexpected token '<' at 1:1                                                                
+                      <!doctype html>                                                                            
+                      ^                                                                                          
+                      at test-script                                                                             
+                      inside "List all reviews for user (6 points) / 3. add review business 1 user 1 (0 points)" 
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 37.  JSONError                                                                                                  
+                      Unexpected token '<' at 1:1                                                                
+                      <!doctype html>                                                                            
+                      ^                                                                                          
+                      at test-script                                                                             
+                      inside "List all reviews for user (6 points) / 4. add review business 2 user 1 (0 points)" 
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 38.  JSONError                                                                                                  
+                      Unexpected token '<' at 1:1                                                                
+                      <!doctype html>                                                                            
+                      ^                                                                                          
+                      at test-script                                                                             
+                      inside "List all reviews for user (6 points) / 5. add review business 2 user 2 (0 points)" 
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 39.  AssertionError  200 status code                                                                            
+                      expected response to have status code 200 but got 404                                      
+                      at assertion:0 in test-script                                                              
+                      inside "List all reviews for user (6 points) / 6. get reviews for user 1 (6 points)"       
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 40.  AssertionError  The response content type is application.json                                              
+                      expected 'text/html' to equal 'application/json'                                           
+                      at assertion:1 in test-script                                                              
+                      inside "List all reviews for user (6 points) / 6. get reviews for user 1 (6 points)"       
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 41.  JSONError       At least 2 reviews for user_id_1 exist                                                     
+                      Unexpected token '<' at 1:1                                                                
+                      <!doctype html>                                                                            
+                      ^                                                                                          
+                      at assertion:2 in test-script                                                              
+                      inside "List all reviews for user (6 points) / 6. get reviews for user 1 (6 points)"       
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 42.  JSONError       All reviews are for user_id_1                                                              
+                      Unexpected token '<' at 1:1                                                                
+                      <!doctype html>                                                                            
+                      ^                                                                                          
+                      at assertion:3 in test-script                                                              
+                      inside "List all reviews for user (6 points) / 6. get reviews for user 1 (6 points)"       
+[90m     [39m[90m                [39m[90m                                                                                            [39m
+ 43.  JSONError       Every reivew has all the required properties                                               
+                      Unexpected token '<' at 1:1                                                                
+                      <!doctype html>                                                                            
+                      ^                                                                                          
+                      at assertion:4 in test-script                                                              
+                      inside "List all reviews for user (6 points) / 6. get reviews for user 1 (6 points)"       
