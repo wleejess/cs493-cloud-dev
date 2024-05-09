@@ -22,8 +22,6 @@ ERROR_DUPE = ({"Error": "You have already submitted a review for this business. 
 
 app = Flask(__name__)
 
-base_url = 'http://127.0.0.1:8080'
-
 logger = logging.getLogger()
 
 def init_connection_pool() -> sqlalchemy.engine.base.Engine:
@@ -165,7 +163,8 @@ def post_businesses():
             logger.exception(e)
             return ({'Error': 'Unable to create business'}, 500)
 
-        self_link = base_url + '/businesses/' + str(business_id)
+        base_url = request.url_root
+        self_link = base_url + 'businesses/' + str(business_id)
 
         return ({"id": business_id,
                 "owner_id": content['owner_id'],
@@ -200,7 +199,9 @@ def get_businesses():
         # Iterate through the result
         for row in rows:
             row_dict = dict(row._asdict())
-            self_link = base_url + '/businesses/' + str(row_dict['business_id'])
+
+            base_url = request.url_root
+            self_link = base_url + 'businesses/' + str(row_dict['business_id'])
 
             business = {
                 'id': row_dict['business_id'],
@@ -218,8 +219,9 @@ def get_businesses():
         next_offset = offset + limit
         next_url = None
 
-        if len(businesses) == limit:
-            next_url = base_url + '/businesses?offset=' + str(next_offset) + '&limit=' + str(limit)
+        if len(businesses) == limit:            
+            base_url = request.url_root
+            next_url = base_url + 'businesses?offset=' + str(next_offset) + '&limit=' + str(limit)
 
         response = {
             'entries': businesses,
@@ -245,7 +247,8 @@ def get_business(id):
             return ERROR_NO_BUSINESS, 404
         else:
             business = row._asdict()
-            self_link = base_url + '/businesses/' + str(id)
+            base_url = request.url_root
+            self_link = base_url + 'businesses/' + str(id)
 
             return ({"id": int(business['business_id']),
                 "owner_id": business['owner_id'],
@@ -271,7 +274,8 @@ def get_owner_business(id):
 
         for row in rows:
             row_dict = dict(row._asdict())
-            self_link = base_url + '/businesses/' + str(row_dict['business_id'])
+            base_url = request.url_root
+            self_link = base_url + 'businesses/' + str(row_dict['business_id'])
 
             business = {
                 'id': row_dict['business_id'],
@@ -317,7 +321,8 @@ def put_business(id):
                                     'business_id': id})
             conn.commit()
 
-            self_link = base_url + '/businesses/' + str(id)
+            base_url = request.url_root
+            self_link = base_url + 'businesses/' + str(id)
 
             return ({'id': id,
                     'owner_id': content['owner_id'],
@@ -408,8 +413,9 @@ def post_reviews():
             logger.exception(e)
             return ({'Error': 'Unable to create review'}, 500)
 
-        self_link = base_url + '/reviews/' + str(review_id)
-        business_link = base_url + '/businesses/' + str(content['business_id'])
+        base_url = request.url_root
+        self_link = base_url + 'reviews/' + str(review_id)
+        business_link = base_url + 'businesses/' + str(content['business_id'])
 
         if 'review_text' in content:
             return ({"id": review_id,
@@ -443,9 +449,10 @@ def get_review(id):
         if row is None:
             return ERROR_NO_REVIEW, 404
         else:
-            review = row._asdict()
-            self_link = base_url + '/reviews/' + str(id)
-            business_link = base_url + '/businesses/' + str(review['business_id'])
+            review = row._asdict()                
+            base_url = request.url_root
+            self_link = base_url + 'reviews/' + str(id)
+            business_link = base_url + 'businesses/' + str(review['business_id'])
 
             return ({"id": int(review['review_id']),
                 "user_id": review['user_id'],
@@ -527,8 +534,9 @@ def get_user_reviews(user_id):
 
         for row in rows:
             row_dict = dict(row._asdict())
-            self_link = base_url + '/reviews/' + str(row_dict['review_id'])
-            business_link = base_url + '/businesses/' + str(row_dict['business_id'])
+            base_url = request.url_root
+            self_link = base_url + 'reviews/' + str(row_dict['review_id'])
+            business_link = base_url + 'businesses/' + str(row_dict['business_id'])
 
             review = {
                 "id": int(row_dict['review_id']),
