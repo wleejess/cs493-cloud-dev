@@ -1,0 +1,275 @@
+newman
+
+assignment5
+
+❏ Generate and decode jwt (3 points)
+↳ 1. get wallace jwt (1 point)
+  POST https://a5-jlee.uw.r.appspot.com/login [200 OK, 1.99kB, 6.8s]
+  ✓  200 status code (0.25 pts)
+  ✓  content is valid (0.75 pts)
+  ┌
+  │ '******* Generate, decode token Test 1 points = 1'
+  │ '******* Generate, decode token Tests current points =
+  │  1'
+  └
+
+↳ 2. decode wallace jwt(0.5 points)
+  GET https://a5-jlee.uw.r.appspot.com/decode [200 OK, 766B, 177ms]
+  ✓  200 status code (0.25 pts)
+  ✓  content is valid (0.25 pts)
+  ┌
+  │ '******* Generate, decode token Test 2 points = 0.5'
+  │ '******* Generate, decode token Tests current points =
+  │  1.5'
+  └
+
+↳ 3. get gromit jwt (1 points)
+  POST https://a5-jlee.uw.r.appspot.com/login [200 OK, 1.99kB, 380ms]
+  ✓  200 status code (0.25 pts)
+  ✓  content is valid (0.75 pts)
+  ┌
+  │ '******* Generate, decode token Test 3 points = 1'
+  │ '******* Generate, decode token Tests current points =
+  │  2.5'
+  └
+
+↳ 4. decode gromit jwt (0.5)
+  GET https://a5-jlee.uw.r.appspot.com/decode [200 OK, 769B, 98ms]
+  ✓  200 status code (0.25 pts)
+  ✓  content is valid (0.25 pts)
+  ┌
+  │ '******* Generate, decode token Test 4 points = 0.5'
+  │ '******* Generate, decode token Tests Total points = 3
+  │ '
+  └
+
+❏ Create a business (10 points)
+↳ 1. wallace 1st biz (2.5 points)
+  POST https://a5-jlee.uw.r.appspot.com/businesses [201 Created, 512B, 173ms]
+  ✓  status code is 201 (0.25 pts)
+  ✓  content is valid (0.25 pts)
+  ✓  self URL is valid (0.25 pts)
+  ✓  owner_id is valid (1.5 pts)
+  ✓  The response content type is application.json (0.25 pts)
+  ┌
+  │ '******* Create a business Test 1 points = 2.5'
+  │ '******* Create a business tests current points = 2.5'
+  └
+
+↳ 2. wallace 2nd biz (2.5 points)
+  POST https://a5-jlee.uw.r.appspot.com/businesses [201 Created, 514B, 152ms]
+  ✓  status code is 201 (0.25 pts)
+  ✓  content is valid (0.25 pts)
+  ✓  self URL is valid (0.25 pts)
+  ✓  owner_id is valid (1.5 pts)
+  ✓  The response content type is application.json (0.25 pts)
+  ┌
+  │ '******* Create a business Test 2 points = 2.5'
+  │ '******* Create a business Tests current points = 5'
+  └
+
+↳ 3. gromit biz (2.5 points)
+  POST https://a5-jlee.uw.r.appspot.com/businesses [201 Created, 523B, 155ms]
+  ✓  1. Status code is 201 (0.25 pts)
+  ✓  content is valid (0.25 pts)
+  ✓  self URL is valid (0.25 pts)
+  ✓  owner_id is valid (1.5 pts)
+  ✓  The response content type is application.json (0.25 pts)
+  ┌
+  │ '******* Create a business Test 3 points = 2.5'
+  │ '******* Create a business Tests current points = 7.5'
+  └
+
+↳ 4. invalid body and jwt (1 point)
+  POST https://a5-jlee.uw.r.appspot.com/businesses [400 Bad Request, 336B, 41ms]
+  ✓  400 status code (0.5 pts)
+  ✓  400 error message (0.25 pts)
+  ✓  The response content type is application.json (0.25 pts)
+  ┌
+  │ '******* Create a business Test 4 points = 1'
+  │ '******* Create a business Tests current points = 8.5'
+  └
+
+↳ 5. valid body, invalid JWT (1.5 points)
+  POST https://a5-jlee.uw.r.appspot.com/businesses [401 Unauthorized, 304B, 95ms]
+  ✓  status code is 401 (1.5 pts)
+  ┌
+  │ '******* Create a business Test 5 points = 1.5'
+  │ '******* Create a business Tests Total points = 10'
+  └
+
+❏ Get a business (10 points)
+↳ 1. wallace biz with wallace jwt (2 points)
+  GET https://a5-jlee.uw.r.appspot.com/businesses/5644004762845184 [200 OK, 585B, 133ms]
+  ✓  status code is 200 (0.25 pts)
+  ✓  content is valid (0.25 pts)
+  ✓  self URL is valid (0.25 pts)
+  ✓  owner_id is valid (1 pts)
+  ✓  The response content type is application.json (0.25 pts)
+  ┌
+  │ '******* Get a business Test 1 points = 2'
+  │ '******* Get a business Tests current points = 2'
+  └
+
+↳ 2. gromit biz with gromit jwt (2 points)
+  GET https://a5-jlee.uw.r.appspot.com/businesses/5632499082330112 [200 OK, 596B, 144ms]
+  ✓  1. Status code is 200 (0.25 pts)
+  ✓  content is valid (0.25 pts)
+  ✓  self URL is valid (0.25 pts)
+  ✓  owner_id is valid (1 pts)
+  ✓  The response content type is application.json (0.25 pts)
+  ┌
+  │ '******* Get a business Test 2 points = 2'
+  │ '******* Get a business Tests current points = 4'
+  └
+
+↳ 3. wallace biz with gromit jwt (2 points)
+  GET https://a5-jlee.uw.r.appspot.com/businesses/5644004762845184 [403 Forbidden, 386B, 127ms]
+  ✓  403 status code (1.5 pts)
+  ✓  400 error message (0.25 pts)
+  ✓  The response content type is application.json (0.25 pts)
+  ┌
+  │ '******* Get a business Test 3 points = 2'
+  │ '******* Get a business Tests current points = 6'
+  └
+
+↳ 4. wallace biz with invalid jwt (2 points)
+  GET https://a5-jlee.uw.r.appspot.com/businesses/5644004762845184 [401 Unauthorized, 304B, 95ms]
+  ✓  status code is 401 (2 pts)
+  ┌
+  │ '******* Get a business Test 4 points = 2'
+  │ '******* Get a business Tests current points = 8'
+  └
+
+↳ 5. non existent biz with wallace jwt (2 points)
+  GET https://a5-jlee.uw.r.appspot.com/businesses/1 [403 Forbidden, 386B, 132ms]
+  ✓  403 status code (1.5 pts)
+  ✓  400 error message (0.25 pts)
+  ✓  The response content type is application.json (0.25 pts)
+  ┌
+  │ '******* Get a business Test 5 points = 2'
+  │ '******* Get a business Tests Total points = 10'
+  └
+
+❏ List businesses (10 points)
+↳ 1. businesses without a JWT (2.5 points)
+  GET https://a5-jlee.uw.r.appspot.com/businesses [200 OK, 1.06kB, 66ms]
+  ✓  status code is 200 (0.5 pts)
+  ✓  at least 3 businesses, all businesses have correct values (2 pts)
+  ┌
+  │ '******* List businesses Test 1 points = 2.5'
+  │ '******* List businesses Tests current points = 2.5'
+  └
+
+↳ 2. businesses with invalid JWT (2.5 points)
+  GET https://a5-jlee.uw.r.appspot.com/businesses [200 OK, 1.06kB, 113ms]
+  ✓  status code is 200 (0.5 pts)
+  ✓  at least 3 businesses, all businesses have correct values (2 pts)
+  ┌
+  │ '******* List businesses Test 2 points = 2.5'
+  │ '******* List businesses Tests current points = 5'
+  └
+
+↳ 3. List wallace businesses (2.5 points)
+  GET https://a5-jlee.uw.r.appspot.com/businesses [200 OK, 848B, 125ms]
+  ✓  status code is 200 (0.5 pts)
+  ✓  wallace is the owner of all businesses, all businesses have correct values (2 pts)
+  ┌
+  │ '******* List businesses Test 3 points = 2.5'
+  │ '******* List businesses Tests current points = 7.5'
+  └
+
+↳ 4. List gromit businesses (2.5 points)
+  GET https://a5-jlee.uw.r.appspot.com/businesses [200 OK, 598B, 155ms]
+  ✓  status code is 200 (0.5 pts)
+  ✓  gromit is the owner of all businesses, all businesses have correct values (2 pts)
+  ┌
+  │ '******* List businesses Test 4 points = 2.5'
+  │ '******* List businesses Tests Total points = 10'
+  └
+
+❏ Delete a business (10 points)
+↳ 1. wallace biz1 with wallace jwt (1 point)
+  DELETE https://a5-jlee.uw.r.appspot.com/businesses/5644004762845184 [204 No Content, 262B, 156ms]
+  ✓  1. Status code is 204 (1 pts)
+  ┌
+  │ '******* Delete a business Test 1 points = 1'
+  │ '******* Delete a business Tests current points = 1'
+  └
+
+↳ 2. gromit biz with gromit jwt (2 points)
+  DELETE https://a5-jlee.uw.r.appspot.com/businesses/5632499082330112 [204 No Content, 262B, 162ms]
+  ✓  1. Status code is 204 (2 pts)
+  ┌
+  │ '******* Delete a business Test 2 points = 2'
+  │ '******* Delete a business Tests current points = 3'
+  └
+
+↳ 3. wallace biz with gromit jwt (2 points)
+  DELETE https://a5-jlee.uw.r.appspot.com/businesses/5644004762845184 [403 Forbidden, 386B, 120ms]
+  ✓  403 status code (1.5 pts)
+  ✓  400 error message (0.25 pts)
+  ✓  The response content type is application.json (0.25 pts)
+  ┌
+  │ '******* Delete a business Test 3 points = 2'
+  │ '******* Delete a business Tests current points = 5'
+  └
+
+↳ 4. wallace biz2 with invalid jwt (2 points)
+  DELETE https://a5-jlee.uw.r.appspot.com/businesses/5710353417633792 [401 Unauthorized, 304B, 89ms]
+  ✓  status code is 401 (2 pts)
+  ┌
+  │ '******* Delete a business Test 4 points = 2'
+  │ '******* Delete a business Tests current points = 7'
+  └
+
+↳ 5. deleted biz with wallace jwt (2 points)
+  DELETE https://a5-jlee.uw.r.appspot.com/businesses/5644004762845184 [403 Forbidden, 386B, 105ms]
+  ✓  403 status code (1.5 pts)
+  ✓  400 error message (0.25 pts)
+  ✓  The response content type is application.json (0.25 pts)
+  ┌
+  │ '******* Delete a business Test 5 points = 2'
+  │ '******* Delete a business Tests current points = 9'
+  └
+
+↳ 6. wallace biz 2 with wallace jwt (1 point)
+  DELETE https://a5-jlee.uw.r.appspot.com/businesses/5710353417633792 [204 No Content, 262B, 178ms]
+  ✓  1. Status code is 204 (1 pts)
+  ┌
+  │ '******* Delete a business Test 6 points = 1'
+  │ '******* Delete a business Total points = 10'
+  │ 
+  │ '******* Generate, decode jwts Tests       Score = 3/3
+  │ '
+  │ '******* Create a businees Tests           Score = 10/
+  │ 10'
+  │ '******* Get a busineess Tests             Score = 10/
+  │ 10'
+  │ '******* List busineess Tests              Score = 10/
+  │ 10'
+  │ '******* Delete a business Tests           Score = 10/
+  │ 10'
+  │ '******* All Postman Tests                 Score = 43/
+  │ 43'
+  └
+
+┌─────────────────────────┬────────────────────┬────────────────────┐
+│                         │           executed │             failed │
+├─────────────────────────┼────────────────────┼────────────────────┤
+│              iterations │                  1 │                  0 │
+├─────────────────────────┼────────────────────┼────────────────────┤
+│                requests │                 24 │                  0 │
+├─────────────────────────┼────────────────────┼────────────────────┤
+│            test-scripts │                 24 │                  0 │
+├─────────────────────────┼────────────────────┼────────────────────┤
+│      prerequest-scripts │                  3 │                  0 │
+├─────────────────────────┼────────────────────┼────────────────────┤
+│              assertions │                 62 │                  0 │
+├─────────────────────────┴────────────────────┴────────────────────┤
+│ total run duration: 10.4s                                         │
+├───────────────────────────────────────────────────────────────────┤
+│ total data received: 8.21kB (approx)                              │
+├───────────────────────────────────────────────────────────────────┤
+│ average response time: 417ms [min: 41ms, max: 6.8s, s.d.: 1342ms] │
+└───────────────────────────────────────────────────────────────────┘

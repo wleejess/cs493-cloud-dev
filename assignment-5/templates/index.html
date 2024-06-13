@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Securing a REST API with JWTs</title>
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h2>Securing a REST API with JWTs</h2>
+    <p>Jessica Lee - Assignment 5</p>
+
+    <div>
+        <p>Objective: Write an application that generates JWTs and has a REST API, in which some resources are 
+            protected and require JWTs for making requests. Application will be deployed on Google Cloud Platform using 
+            Google App Engine and Datastore.
+        </p>
+        <p>
+            <ol><b>Implement a REST API with 6 endpoints:</b>
+                <li>Generate a JWT: Generate a JWT for the username/password provided in the body of the request.</li>
+                <li>Decode a JWT: Decode a valid JWT provided as a Bearer token.</li>
+                <li>Create a business: Create a business if request body is valid, and has a valid JWT. Otherwise, fail.</li>
+                <li>Get a business: Return the business. Response depends on the validity of the JWT in the request, and who the owner is.</li>
+                <li>List businesses: List businesses. Response depends on validity of the JWT in the request.</li>
+                <li>Delete a business: Delete the business. Response depends on the validity of the JWT in the request, and who the owner is.</li>
+            </ol>
+        </p>
+    </div>
+</body>
+</html>
