@@ -26,8 +26,8 @@ ERROR_MISSING_ATTRIBUTE = {"Error": "The request body is missing at least one of
 ERROR_NO_BUSINESS = {"Error": "No business with this business_id exists"}
 ERROR_DUPE = {"Error": "You have already submitted a review for this business. You can update your previous review, or delete it and submit a new review"}
 
-CLIENT_ID = '06vRwHQgBN3jvEU5Ck4NsrTOEvAv6UUY'
-CLIENT_SECRET = 'SHhG0fQpVvOi893X-HJ3oanLXdJa66InT-vuovLNqLhkTmbVbFumxkIwiG8CVJBv'
+CLIENT_ID = 'id from auth0'
+CLIENT_SECRET = 'secret'
 DOMAIN = 'dev-aiwvx7zp7o7fed7k.us.auth0.com'
 
 ALGORITHMS = ["RS256"]
