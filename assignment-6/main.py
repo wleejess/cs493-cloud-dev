@@ -26,8 +26,8 @@ ERROR_403 = {"Error": "You don't have permission on this resource"}
 ERROR_404 = {"Error": "Not found"}
 ERROR_409 = {"Error": "Enrollment data is invalid"}
 
-CLIENT_ID = 'ErWMLzhj3siwyAKAtioj1bkrwu8IcJy9'
-CLIENT_SECRET = 'XWuLVFHUu5nPNCKzCqlYGNhmzZixs_83GAfi_rdgEWQG2DTty7JzlTXJONvFlsfl'
+CLIENT_ID = 'from auth0'
+CLIENT_SECRET = 'secret'
 DOMAIN = 'dev-aiwvx7zp7o7fed7k.us.auth0.com'
 
 ALGORITHMS = ["RS256"]
